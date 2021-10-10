@@ -49,16 +49,16 @@ og_image: # The site-wide (default for all links) Open Graph preview image
 # Social integration
 # -----------------------------------------------------------------------------
 
-github_username: https://github.com/shubhamsingh91
+github_username: shubhamsingh91
 gitlab_username: # your GitLab user name
 twitter_username: # your Twitter handle
-linkedin_username: https://www.linkedin.com/in/singh281/
-scholar_userid: https://scholar.google.com/citations?user=-hbDYEIAAAAJ&hl=en
+linkedin_username: singh281
+scholar_userid: -hbDYEIAAAAJ&hl
 orcid_id: # your ORCID ID
 medium_username: # your Medium username
 quora_username: # your Quora username
 publons_id: # your ID on Publons
-research_gate_profile: https://www.researchgate.net/profile/Shubham-Singh-19
+research_gate_profile: Shubham-Singh-19
 blogger_url: # your blogger URL
 work_url: # work page URL
 keybase_username: # your keybase user name
