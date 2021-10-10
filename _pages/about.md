@@ -22,7 +22,7 @@ I am a Ph.D student at UT Austin in the dept. of Aerospace Engineering. My resea
 
 In the past, I have worked on projects in the area of systems engineering for Mars mission architecture design optimization for hypersonic mission design, and deep reinforcement learning for job scheduling algorithms.
 
-Apart from work, I like to explore new food/culture and travel. I am also curious about the art of effective communication. I am a part of the [UT Sciences Toastmasters](https://www.facebook.com/groups/UTSTM/) where we practice how to give effective speeches, and a peer mentor at the [LSI-Moody College of Communication](https://moody.utexas.edu/centers/lang-stuttering-institute). 
+Apart from work, I like to explore new food/culture and travel. I am also curious about the art of effective communication. I am a part of the [UT Sciences Toastmasters](https://www.facebook.com/groups/UTSTM/) where we practice public speaking, and a peer mentor at the [LSI-Moody College of Communication](https://moody.utexas.edu/centers/lang-stuttering-institute). 
 
 Feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/singh281/) or my email (link below) for a chat about robotics/life or potential job/internship opportunities. :) 
 
