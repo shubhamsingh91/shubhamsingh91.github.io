@@ -2,18 +2,19 @@
 layout: about
 title: about
 permalink: /
-description: <a href="#">Affiliations</a>. Address. Contacts. Moto. Etc.
+description: Ph.D Student, Aerospace Engineering, UT Austin.
+#description: <a href="#">UT Austin</a>. Address. Contacts. Moto. Etc.
 
 profile:
   align: right
-  image: pic_ss.jpg
-  address: >
-    <p>The University of Texas at Austin</p>
+  image: prof_pic.jpg
+  #address: >
+   # <p>The University of Texas at Austin</p>
    # <p>123 your address street</p>
-    <p>Austin, TX 12345</p>
+   # <p>Austin, TX 12345</p>
 
-news: true  # includes a list of news items
-selected_papers: true # includes a list of papers marked as "selected={true}"
+news: false  # includes a list of news items
+selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
