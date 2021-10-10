@@ -8,10 +8,10 @@ description: Ph.D Student, Aerospace Engineering, UT Austin.
 profile:
   align: right
   image: prof_pic.jpg
-  #address: >
-   # <p>The University of Texas at Austin</p>
-   # <p>123 your address street</p>
-   # <p>Austin, TX 12345</p>
+  address: >
+   <p>The University of Texas at Austin</p>
+   <p>123 your address street</p>
+   <p>Austin, TX 12345</p>
 
 news: false  # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
