@@ -2,7 +2,7 @@
 layout: page
 permalink: /resume/
 title: resume
-description: .
+description: Link to Resume
 nav: true
 ---
 
