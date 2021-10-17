@@ -44,11 +44,11 @@ label2 = "<html>&tau;<sub>2</sub></html>";
       </div>       
      <div style="flex:1;padding-left:5px;">
             <img src="/assets/img/DDP_images/pendu1.gif" style="height:5cm;">
-            <figcaption>Pendu-bot control (with label1) using DDP </figcaption>
+            <figcaption>Pendu-bot control (with &#932 <sub>1</sub>) using DDP </figcaption>
       </div>     
    <div style="flex:1;padding-left:5px;">
             <img src="/assets/img/DDP_images/pendu2.gif" style="height:5cm;">
-            <figcaption>Underactuated Pendu-bot control using DDP </figcaption>
+            <figcaption>Pendu-bot control (with &#932) using DDP </figcaption>
       </div>                 
 </div>
 <br>
@@ -109,7 +109,7 @@ The problem of determining the future state of a satellite based on a set of obs
 
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
-            <img src="/assets/img/DDP_images/sos.png" style="height:8cm;">
+            <img src="/assets/img/DDP_images/sos.png" style="height:8cm;" >
               <figcaption>ABM Simulation Space </figcaption>
       </div>                
 </div>
