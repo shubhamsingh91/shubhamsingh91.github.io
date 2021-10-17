@@ -7,7 +7,7 @@ nav: true
 horizontal: true
 ---
 
-## 1. Analytical Partial Derivatives of Rigid Body Systems
+## 1. Analytical Partial Derivatives of Rigid Body Systems (2020-)
 
 
 <div style="display:flex">
@@ -34,7 +34,7 @@ horizontal: true
 label1 = "<html>&tau;<sub>1</sub></html>";
 label2 = "<html>&tau;<sub>2</sub></html>";
 
-## 2. Differential Dynamic Programming for Rigid Body Systems
+## 2. Differential Dynamic Programming for Rigid Body Systems (2018-)
 
 
 <div style="display:flex">
@@ -55,7 +55,7 @@ label2 = "<html>&tau;<sub>2</sub></html>";
 
 <div style="display:inline-block;vertical-align: middle;">
 
- <a href="https://www.sciencedirect.com/science/article/pii/S0094576519314705"> Multi Shooting Differential Dynamic Programming [MDDP]</a> algorithm is benchmarked for legged robotic models like the underactuated pendubot and the cart-pole system. Experiments are done to adjust the MDDP tuning parameters and safeguard settings for the feedback matrices B, C, and D. It was found that the safeguarding multipliers are sensitive to the problem type, and can range from 0.1 to 100,000.
+ <a href="https://www.sciencedirect.com/science/article/pii/S0094576519314705"> Multi Shooting Differential Dynamic Programming [MDDP]</a> algorithm is benchmarked for legged robotic models like the underactuated pendubot and the cart-pole system. Experiments are done to adjust the MDDP tuning parameters and safeguard settings for the feedback matrices B, C, and D. It is found that the safeguarding multipliers are sensitive to the problem type, and can range from 0.1 to 100,000.
 
 </div>
 
@@ -63,7 +63,7 @@ label2 = "<html>&tau;<sub>2</sub></html>";
 <br>
 <br>
 
-## 3. TOWR for Urban Environments
+## 3. TOWR for Urban Environments (Jan-May 2021)
 
 
 <div style="display:flex">
@@ -85,7 +85,7 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 <br>
 <br>
 
-## 4. Trust Region Method Based on Cholesky Decomposition
+## 4. Trust Region Method Based on Cholesky Decomposition (Aug-Dec 2019)
 
 
 Second-order optimization methods often use the Levenberg-Marquardt method to decide the step length. To improve the step length selection criteria, in this project, a trust region method based on Cholesky Decomposition used for second-order optimization algorithms is implemented. In the end, suggestions on the method are mentioned to use it for high degree-of-freedom systems like legged robots. This method is key in accelerating the use of the full second-order method for optimization-based robotics.
@@ -95,7 +95,7 @@ Second-order optimization methods often use the Levenberg-Marquardt method to de
 <br>
 
 
-## 5. Collaborative Air Autonomy- System of Systems
+## 5. Collaborative Air Autonomy- System of Systems (Aug-Dec 2015)
 
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
