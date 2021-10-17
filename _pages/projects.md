@@ -8,17 +8,38 @@ horizontal: true
 ---
 
 ## 1. Analytical Partial Derivatives of Rigid Body Systems
-        some description here.
 
-
-## 2. Differential Dynamic Programming for Rigid Body Systems
 <div id="qr" style="display:inline-block; min-width:2.2cm; height:7cm; align: center;vertical-align: middle;" >
     <div class="row">
         <div class="column">
+            <img src="/assets/img/DDP_images/arxiv1.gif" style="height:6cm;">
+             <figcaption>CPU Runtime for Floating Base Robots</figcaption>
+        </div>
+        <div class="column">
+            <img src="/assets/img/DDP_images/arxiv2.gif" style="height:6cm;">
+             <figcaption>CPU Runtime for serial/branched chains</figcaption>
+        </div>
+    </div>
+</div>
+<div style="display:inline-block;vertical-align: middle;">
+
+ An essential need for many model-based robot control algorithms is the ability to quickly and accurately compute partial derivatives of the equations of motion. State of the art approaches to this problem often use analytical methods based on the chain rule applied to existing dynamics algorithms. Although these methods are an improvement over finite differences in terms of accuracy, they are not always the most efficient. In this paper, we contribute new closed-form expressions for the first-order partial derivatives of inverse dynamics, leading to a recursive algorithm. The algorithm is benchmarked against chain-rule approaches in Fortran and against an existing algorithm from the Pinocchio library in C++. Tests consider computing the partial derivatives of inverse and forward dynamics for robots ranging from kinematic chains to humanoids and quadrupeds. Compared to the previous open-source Pinocchio implementation, our new analytical results uncover a key computational restructuring that enables efficiency gains. Speedups of up to 1.4x are reported for calculating the partial derivatives of inverse dynamics for the 50-dof Talos humanoid.
+
+ [Code](https://github.com/shubhamsingh91/pinocchio) , [Paper](https://arxiv.org/abs/2105.05102)
+ 
+</div>
+
+
+## 2. Differential Dynamic Programming for Rigid Body Systems
+<div id="qr" style="display:inline-block; min-width:2.2cm; height:6cm; align: center;vertical-align: middle;" >
+    <div class="row">
+        <div class="column">
             <img src="/assets/img/DDP_images/cartpole.gif" style="height:5cm;">
+            <figcaption>Cart-Pole System</figcaption>
         </div>
         <div class="column">
             <img src="/assets/img/DDP_images/pendu1.gif" style="height:5cm;">
+            <figcaption>Underactuated Pendu-bot control using DDP </figcaption>
         </div>
         <div class="column">
             <img src="/assets/img/DDP_images/pendu2.gif" style="height:5cm;">
@@ -28,8 +49,8 @@ horizontal: true
 <div style="display:inline-block;vertical-align: middle;">
 
 Multi Shooting Differential Dynamic Programming [MDDP](https://www.sciencedirect.com/science/article/pii/S0094576519314705)
- algorithm is benchmarked for legged robotic models like the underactuated pendubot and the cart-pole system. Experiments are done to adjust the MDDP tuning parameters and safeguard settings for the feedback matrices B,C, and D. It was found that the safeguarding multipliers are sensitive to the problem type, and can range from 0.1 to 100,000.
- 
+ algorithm is benchmarked for legged robotic models like the underactuated pendubot and the cart-pole system. Experiments are done to adjust the MDDP tuning parameters and safeguard settings for the feedback matrices B, C, and D. It was found that the safeguarding multipliers are sensitive to the problem type, and can range from 0.1 to 100,000.
+
 </div>
 
 
@@ -43,9 +64,6 @@ Multi Shooting Differential Dynamic Programming [MDDP](https://www.sciencedirect
     <div class="row">
         <div class="column">
             <img src="/assets/img/TOWR_images/turns.gif" style="height:6cm;">
-        </div>
-        <div class="column">
-            <img src="/assets/img/TOWR_images/probb2.gif" style="height:6cm;">
         </div>
     </div>
 </div>
