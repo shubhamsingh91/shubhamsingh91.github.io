@@ -9,27 +9,18 @@ horizontal: true
 
 ## 1. Analytical Partial Derivatives of Rigid Body Systems
 
-<div id="qr" style="display:inline-block; min-width:2.2cm; height:7cm; align: center;vertical-align: middle;" >
-    <div class="row">
-        <div class="column">
-            <img src="/assets/img/DDP_images/arxiv1.png" style="height:6cm;" class="center">
-             <figcaption>  CPU Runtime for Floating Base Robots</figcaption>
-        </div>
-        <div class="column">
-            <img src="/assets/img/DDP_images/arxiv2.png" style="height:6cm;" class="center">
-             <figcaption>  CPU Runtime for serial/branched chains</figcaption>
-        </div>
-    </div>
-</div>
 
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
          <img src="/assets/img/DDP_images/arxiv1.png" style="height:6cm;" class="center">
-             <figcaption>  CPU Runtime for Floating Base Robots</figcaption>     </div>
+             <figcaption>  CPU Runtime for Floating Base Robots</figcaption>     
+    </div>
      <div style="flex:1;padding-left:5px;">
         <img src="/assets/img/DDP_images/arxiv2.png" style="height:6cm;" class="center">
-           <figcaption>  CPU Runtime for serial/branched chains</figcaption>     </div>
+           <figcaption>  CPU Runtime for serial/branched chains</figcaption>   
+     </div>
 </div>
+<br>
 
 <div style="display:inline-block;vertical-align: middle;">
 
@@ -57,6 +48,18 @@ horizontal: true
         </div>
     </div>
 </div>
+
+<div style="display:flex">
+     <div style="flex:1;padding-right:5px;">
+            <img src="/assets/img/DDP_images/cartpole.gif" style="height:5cm;">
+            <figcaption>Cart-Pole System</figcaption>
+      </div>       
+     <div style="flex:1;padding-left:5px;">
+            <img src="/assets/img/DDP_images/pendu1.gif" style="height:5cm;">
+            <figcaption>Underactuated Pendu-bot control using DDP </figcaption>
+      </div>            
+</div>
+
 <div style="display:inline-block;vertical-align: middle;">
 
  Multi Shooting Differential Dynamic Programming [MDDP](https://www.sciencedirect.com/science/article/pii/S0094576519314705)
