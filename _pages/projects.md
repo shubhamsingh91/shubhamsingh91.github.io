@@ -12,11 +12,11 @@ horizontal: true
 <div id="qr" style="display:inline-block; min-width:2.2cm; height:7cm; align: center;vertical-align: middle;" >
     <div class="row">
         <div class="column">
-            <img src="/assets/img/DDP_images/arxiv1.png" style="height:6cm;">
+            <img src="/assets/img/DDP_images/arxiv1.png" style="height:6cm;" class="center">
              <figcaption>CPU Runtime for Floating Base Robots</figcaption>
         </div>
         <div class="column">
-            <img src="/assets/img/DDP_images/arxiv2.png" style="height:6cm;">
+            <img src="/assets/img/DDP_images/arxiv2.png" style="height:6cm;" class="center">
              <figcaption>CPU Runtime for serial/branched chains</figcaption>
         </div>
     </div>
@@ -54,7 +54,8 @@ horizontal: true
 </div>
 
 
-
+<br>
+<br>
 
 ## 3. TOWR for Urban Environments
 
@@ -74,6 +75,8 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 </div>
 
 [Code](https://github.com/shubhamsingh91/ASE_389proj) ,      [Slides](https://docs.google.com/presentation/d/1Kq6bykrTViuv7eVQTOppSFoD8zX2M3X8gUIvukkM-2Q/edit#slide=id.p1)
+<br>
+<br>
 
 ## 4. Trust Region Method Based on Cholesky Decomposition
 
@@ -81,6 +84,8 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 Second-order optimization methods often use the Levenberg-Marquardt method to decide the step length. To improve the step length selection criteria, in this project, a trust region method based on Cholesky Decomposition used for second-order optimization algorithms is implemented. In the end, suggestions on the method are mentioned to use it for high degree-of-freedom systems like legged robots. This method is key in accelerating the use of the full second-order method for optimization-based robotics.
 
 [Slides](https://utexas.app.box.com/s/bccafh8wlntmo6qg7zzdijjgbtiy2qn7)
+<br>
+<br>
 
 
 ## 5. Collaborative Air Autonomy- System of Systems
@@ -90,7 +95,8 @@ Second-order optimization methods often use the Levenberg-Marquardt method to de
 <div id="qr" style="display:inline-block; min-width:2.2cm; height:7cm; align: center;vertical-align: middle;" >
     <div class="row">
         <div class="column">
-            <img src="/assets/img/TOWR_images/turns.gif" style="height:6cm;">
+            <img src="/assets/img/TOWR_images/sos.png" style="height:6cm;">
+              <figcaption>ABM Simulation Space </figcaption>
         </div>
     </div>
 </div>
