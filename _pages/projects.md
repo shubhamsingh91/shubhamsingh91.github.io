@@ -12,20 +12,39 @@ horizontal: true
 
 
 ## 2. Differential Dynamic Programming for Rigid Body Systems
-        some description here.
+<div id="qr" style="display:inline-block; min-width:2.2cm; height:7cm; align: center;vertical-align: middle;" >
+    <div class="row">
+        <div class="column">
+            <img src="/assets/img/DDP_images/cartpole.gif" style="height:5cm;">
+        </div>
+        <div class="column">
+            <img src="/assets/img/DDP_images/pendu1.gif" style="height:5cm;">
+        </div>
+        <div class="column">
+            <img src="/assets/img/DDP_images/pendu2.gif" style="height:5cm;">
+        </div>
+    </div>
+</div>
+<div style="display:inline-block;vertical-align: middle;">
+
+Multi Shooting Differential Dynamic Programming [MDDP](https://www.sciencedirect.com/science/article/pii/S0094576519314705)
+ algorithm is benchmarked for legged robotic models like the underactuated pendubot and the cart-pole system. Experiments are done to adjust the MDDP tuning parameters and safeguard settings for the feedback matrices B,C, and D. It was found that the safeguarding multipliers are sensitive to the problem type.
+</div>
+
+
 
 
 ## 3. TOWR for Urban Environments
 
 
 
-<div id="qr" style="display:inline-block; min-width:2.2cm; height:6cm; align: center;vertical-align: middle;" >
+<div id="qr" style="display:inline-block; min-width:2.2cm; height:7cm; align: center;vertical-align: middle;" >
     <div class="row">
         <div class="column">
-            <img src="/assets/img/TOWR_images/probb.gif" style="height:5cm;">
+            <img src="/assets/img/TOWR_images/turns.gif" style="height:6cm;">
         </div>
         <div class="column">
-            <img src="/assets/img/TOWR_images/probb2.gif" style="height:5cm;">
+            <img src="/assets/img/TOWR_images/probb2.gif" style="height:6cm;">
         </div>
     </div>
 </div>
