@@ -28,7 +28,8 @@ horizontal: true
 
  [Code](https://github.com/shubhamsingh91/pinocchio) , [Paper](https://arxiv.org/abs/2105.05102)
  
-
+<br>
+<br>
 
 ## 2. Differential Dynamic Programming for Rigid Body Systems
 <div id="qr" style="display:inline-block; min-width:2.2cm; height:6cm; align: center;vertical-align: middle;" >
