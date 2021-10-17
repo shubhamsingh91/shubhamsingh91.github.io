@@ -42,11 +42,11 @@ horizontal: true
       </div>       
      <div style="flex:1;padding-left:5px;">
             <img src="/assets/img/DDP_images/pendu1.gif" style="height:5cm;">
-            <figcaption>Pendu-bot control (with only &tau <sub>1</sub>) using DDP </figcaption>
+            <figcaption>Pendu-bot control (with only &tau; <sub>1</sub>) using DDP </figcaption>
       </div>     
    <div style="flex:1;padding-left:5px;">
             <img src="/assets/img/DDP_images/pendu2.gif" style="height:5cm;">
-            <figcaption>Pendu-bot control (with only &tau <sub>2</sub>) using DDP </figcaption>
+            <figcaption>Pendu-bot control (with only &tau; <sub>2</sub>) using DDP </figcaption>
       </div>                 
 </div>
 <br>
