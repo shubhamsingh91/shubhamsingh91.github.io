@@ -81,7 +81,7 @@ horizontal: true
 </div>
 <div style="display:inline-block;vertical-align: middle;">
 
-This project is aimed at simulating the behavior of quadrupeds to move in urban environments (hallways, buildings, turns, etc.) The popular TOWR (Trajectory Optimizer for Walking Robots) library is used to implement obstacle avoidance constrained motion for quadrupeds. A number of constraints are implemented on the COM and legs of the quadruped to avoid cylindrical obstacles, make sharp turns, and reach a target. Depending on the target and obstacle positions, the quadruped chooses an optimal trajectory to reach in a given time. The entire coding framework is based on the IPOPT framework written in C++.
+This project is aimed at simulating the behavior of quadrupeds to move in urban environments (hallways, buildings, turns, etc.) The popular <a href="https://github.com/ethz-adrl/ifopt">TOWR (Trajectory Optimizer for Walking Robots) library</a> is used to implement obstacle avoidance constrained motion for quadrupeds. A number of constraints are implemented on the COM and legs of the quadruped to avoid cylindrical obstacles, make sharp turns, and reach a target. Depending on the target and obstacle positions, the quadruped chooses an optimal trajectory to reach in a given time. The entire coding framework is based on the IPOPT framework written in C++.
 
 </div>
 
