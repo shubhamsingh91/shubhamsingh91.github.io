@@ -12,11 +12,11 @@ horizontal: true
 
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
-         <img src="/assets/img/DDP_images/arxiv1.png" style="height:6cm;" class="center">
+         <img src="/assets/img/DDP_images/arxiv1.png" style="height:7cm;" class="center">
              <figcaption>  CPU Runtime for Floating Base Robots</figcaption>     
     </div>
      <div style="flex:1;padding-left:5px;">
-        <img src="/assets/img/DDP_images/arxiv2.png" style="height:6cm;" class="center">
+        <img src="/assets/img/DDP_images/arxiv2.png" style="height:7cm;" class="center">
            <figcaption>  CPU Runtime for serial/branched chains</figcaption>   
      </div>
 </div>
