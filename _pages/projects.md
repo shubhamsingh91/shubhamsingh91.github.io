@@ -17,12 +17,10 @@ horizontal: true
 
 ## 3. TOWR for Urban Environments
 
-![image](/assets/img/TOWR_images/proba.png){: style="float: left" width="250"}
-<img src="/assets/img/TOWR_images/proba.png" width="200px"  />
 
 
 <div id="qr" style="display:inline-block; min-width:2.2cm; height:3.8cm; align: center;vertical-align: middle;" >
-  <img src="/assets/img/TOWR_images/proba.png" style="height:3.8cm;">
+  <img src="/assets/img/TOWR_images/probb.gif" style="height:5cm;">
 </div>
 <div style="display:inline-block;vertical-align: middle;">
 
@@ -30,8 +28,11 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 
 </div>
 
-[Code](https://github.com/shubhamsingh91/ASE_389proj)   [Slides](https://docs.google.com/presentation/d/1Kq6bykrTViuv7eVQTOppSFoD8zX2M3X8gUIvukkM-2Q/edit#slide=id.p1)
+[Code](https://github.com/shubhamsingh91/ASE_389proj)       [Slides](https://docs.google.com/presentation/d/1Kq6bykrTViuv7eVQTOppSFoD8zX2M3X8gUIvukkM-2Q/edit#slide=id.p1)
 
 ## 4. Trust Region Method Based on Cholesky Decomposition
 
-        some description here.
+
+Second-order optimization methods often use the Levenberg-Marquardt method to decide the step length. To improve the step length selection criteria, in this project, a trust region method based on Cholesky Decomposition used for second-order optimization algorithms is implemented. In the end, suggestions on the method are mentioned to use it for high degree-of-freedom systems like legged robots. This method is key in accelerating the use of the full second-order method for optimization-based robotics.
+
+[Slides](https://utexas.app.box.com/s/bccafh8wlntmo6qg7zzdijjgbtiy2qn7)
