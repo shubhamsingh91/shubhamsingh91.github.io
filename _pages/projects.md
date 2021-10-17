@@ -35,21 +35,7 @@ label1 = "<html>&tau;<sub>1</sub></html>";
 label2 = "<html>&tau;<sub>2</sub></html>";
 
 ## 2. Differential Dynamic Programming for Rigid Body Systems
-<div id="qr" style="display:inline-block; min-width:2.2cm; height:6cm; align: center;vertical-align: middle;" >
-    <div class="row">
-        <div class="column">
-            <img src="/assets/img/DDP_images/cartpole.gif" style="height:5cm;">
-            <figcaption>Cart-Pole System</figcaption>
-        </div>
-        <div class="column">
-            <img src="/assets/img/DDP_images/pendu1.gif" style="height:5cm;">
-            <figcaption>Underactuated Pendu-bot control using DDP </figcaption>
-        </div>
-        <div class="column">
-            <img src="/assets/img/DDP_images/pendu2.gif" style="height:5cm;">
-        </div>
-    </div>
-</div>
+
 
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
@@ -65,6 +51,7 @@ label2 = "<html>&tau;<sub>2</sub></html>";
             <figcaption>Underactuated Pendu-bot control using DDP </figcaption>
       </div>                 
 </div>
+<br>
 
 <div style="display:inline-block;vertical-align: middle;">
 
@@ -79,15 +66,6 @@ label2 = "<html>&tau;<sub>2</sub></html>";
 ## 3. TOWR for Urban Environments
 
 
-
-<div id="qr" style="display:inline-block; min-width:2.2cm; height:7cm; align: center;vertical-align: middle;" >
-    <div class="row">
-        <div class="column">
-            <img src="/assets/img/TOWR_images/turns.gif" style="height:6cm;">
-        </div>
-    </div>
-</div>
-
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
             <img src="/assets/img/TOWR_images/turns.gif" style="height:6cm;">
@@ -95,6 +73,7 @@ label2 = "<html>&tau;<sub>2</sub></html>";
       </div>                
 </div>
 
+<br>
 
 <div style="display:inline-block;vertical-align: middle;">
 
@@ -118,16 +97,15 @@ Second-order optimization methods often use the Levenberg-Marquardt method to de
 
 ## 5. Collaborative Air Autonomy- System of Systems
 
-
-
-<div id="qr" style="display:inline-block; min-width:2.2cm; height:7cm; align: center;vertical-align: middle;" >
-    <div class="row">
-        <div class="column">
-            <img src="/assets/img/DDP_images/sos.png" style="height:6cm;">
+<div style="display:flex">
+     <div style="flex:1;padding-right:5px;">
+            <img src="/assets/img/DDP_images/sos.png" style="height:8cm;">
               <figcaption>ABM Simulation Space </figcaption>
-        </div>
-    </div>
+      </div>                
 </div>
+<br>
+
+
 <div style="display:inline-block;vertical-align: middle;">
 
 The implementation of a collaborative air autonomy system of systems (SoS) on the Hoosier National Forest in Southern Indiana provides an effective means to combat fire threats. This study explores how to utilize air autonomy systems (UAVs) and ground-based systems (lookout towers and ground support vehicles) to detect forest fires more efficiently than isolated constituent systems. In order to support this analysis, an SoS was created through definition, abstraction, and implementation phases, including a research question motivated by the operational context, status quo, and barriers. The agent-based modeling (ABM) method was chosen to simulate the start and spreading of a forest fire and how the proposed systems take action against the fires. Before building the ABM of the targeted SoS, a paper model was developed to represent the real-world situation. The model was used to translate real-world behaviors into a MATLAB program. From the simulation, the two hypotheses formed were tested and a trade-space analysis was completed contrasting the response time. Performance Index) to the cost of implementation for the suggested architecture. This trade study revealed that the best balance between cost and performance was a system based on multiple watchtowers with medium ranges with UAV speed improvements as a primary investment.
