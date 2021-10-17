@@ -19,8 +19,15 @@ horizontal: true
 
 
 
-<div id="qr" style="display:inline-block; min-width:2.2cm; height:3.8cm; align: center;vertical-align: middle;" >
-  <img src="/assets/img/TOWR_images/probb.gif" style="height:5cm;">
+<div id="qr" style="display:inline-block; min-width:2.2cm; height:6cm; align: center;vertical-align: middle;" >
+    <div class="row">
+        <div class="column">
+            <img src="/assets/img/TOWR_images/probb.gif" style="height:5cm;">
+        </div>
+        <div class="column">
+            <img src="/assets/img/TOWR_images/probb2.gif" style="height:5cm;">
+        </div>
+    </div>
 </div>
 <div style="display:inline-block;vertical-align: middle;">
 
@@ -28,7 +35,7 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 
 </div>
 
-[Code](https://github.com/shubhamsingh91/ASE_389proj)       [Slides](https://docs.google.com/presentation/d/1Kq6bykrTViuv7eVQTOppSFoD8zX2M3X8gUIvukkM-2Q/edit#slide=id.p1)
+[Code](https://github.com/shubhamsingh91/ASE_389proj) ,      [Slides](https://docs.google.com/presentation/d/1Kq6bykrTViuv7eVQTOppSFoD8zX2M3X8gUIvukkM-2Q/edit#slide=id.p1)
 
 ## 4. Trust Region Method Based on Cholesky Decomposition
 
