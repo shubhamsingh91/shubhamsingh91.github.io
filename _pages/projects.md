@@ -31,8 +31,6 @@ horizontal: true
  
 <br>
 <br>
-label1 = "<html>&tau;<sub>1</sub></html>";
-label2 = "<html>&tau;<sub>2</sub></html>";
 
 ## 2. Differential Dynamic Programming for Rigid Body Systems (2018-)
 
@@ -44,11 +42,11 @@ label2 = "<html>&tau;<sub>2</sub></html>";
       </div>       
      <div style="flex:1;padding-left:5px;">
             <img src="/assets/img/DDP_images/pendu1.gif" style="height:5cm;">
-            <figcaption>Pendu-bot control (with &#932 <sub>1</sub>) using DDP </figcaption>
+            <figcaption>Pendu-bot control (with only &tau <sub>1</sub>) using DDP </figcaption>
       </div>     
    <div style="flex:1;padding-left:5px;">
             <img src="/assets/img/DDP_images/pendu2.gif" style="height:5cm;">
-            <figcaption>Pendu-bot control (with &#932) using DDP </figcaption>
+            <figcaption>Pendu-bot control (with only &tau <sub>2</sub>) using DDP </figcaption>
       </div>                 
 </div>
 <br>
