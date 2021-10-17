@@ -28,7 +28,8 @@ horizontal: true
 <div style="display:inline-block;vertical-align: middle;">
 
 Multi Shooting Differential Dynamic Programming [MDDP](https://www.sciencedirect.com/science/article/pii/S0094576519314705)
- algorithm is benchmarked for legged robotic models like the underactuated pendubot and the cart-pole system. Experiments are done to adjust the MDDP tuning parameters and safeguard settings for the feedback matrices B,C, and D. It was found that the safeguarding multipliers are sensitive to the problem type.
+ algorithm is benchmarked for legged robotic models like the underactuated pendubot and the cart-pole system. Experiments are done to adjust the MDDP tuning parameters and safeguard settings for the feedback matrices B,C, and D. It was found that the safeguarding multipliers are sensitive to the problem type, and can range from 0.1 to 100,000.
+ 
 </div>
 
 
