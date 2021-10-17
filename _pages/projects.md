@@ -2,7 +2,7 @@
 layout: page
 title: projects
 permalink: /projects/
-description: Under Construction!
+description: 
 nav: true
 horizontal: true
 ---
@@ -13,14 +13,24 @@ horizontal: true
     <div class="row">
         <div class="column">
             <img src="/assets/img/DDP_images/arxiv1.png" style="height:6cm;" class="center">
-             <figcaption>CPU Runtime for Floating Base Robots</figcaption>
+             <figcaption>  CPU Runtime for Floating Base Robots</figcaption>
         </div>
         <div class="column">
             <img src="/assets/img/DDP_images/arxiv2.png" style="height:6cm;" class="center">
-             <figcaption>CPU Runtime for serial/branched chains</figcaption>
+             <figcaption>  CPU Runtime for serial/branched chains</figcaption>
         </div>
     </div>
 </div>
+
+<div style="display:flex">
+     <div style="flex:1;padding-right:5px;">
+         <img src="/assets/img/DDP_images/arxiv1.png" style="height:6cm;" class="center">
+             <figcaption>  CPU Runtime for Floating Base Robots</figcaption>     </div>
+     <div style="flex:1;padding-left:5px;">
+        <img src="/assets/img/DDP_images/arxiv2.png" style="height:6cm;" class="center">
+           <figcaption>  CPU Runtime for serial/branched chains</figcaption>     </div>
+</div>
+
 <div style="display:inline-block;vertical-align: middle;">
 
  An essential need for many model-based robot control algorithms is the ability to quickly and accurately compute partial derivatives of the equations of motion. State of the art approaches to this problem often use analytical methods based on the chain rule applied to existing dynamics algorithms. Although these methods are an improvement over finite differences in terms of accuracy, they are not always the most efficient. In this paper, we contribute new closed-form expressions for the first-order partial derivatives of inverse dynamics, leading to a recursive algorithm. The algorithm is benchmarked against chain-rule approaches in Fortran and against an existing algorithm from the Pinocchio library in C++. Tests consider computing the partial derivatives of inverse and forward dynamics for robots ranging from kinematic chains to humanoids and quadrupeds. Compared to the previous open-source Pinocchio implementation, our new analytical results uncover a key computational restructuring that enables efficiency gains. Speedups of up to 1.4x are reported for calculating the partial derivatives of inverse dynamics for the 50-dof Talos humanoid.
@@ -96,7 +106,7 @@ Second-order optimization methods often use the Levenberg-Marquardt method to de
 <div id="qr" style="display:inline-block; min-width:2.2cm; height:7cm; align: center;vertical-align: middle;" >
     <div class="row">
         <div class="column">
-            <img src="/assets/img/TOWR_images/sos.png" style="height:6cm;">
+            <img src="/assets/img/DDP_images/sos.png" style="height:6cm;">
               <figcaption>ABM Simulation Space </figcaption>
         </div>
     </div>
