@@ -26,6 +26,7 @@ horizontal: true
 
  An essential need for many model-based robot control algorithms is the ability to quickly and accurately compute partial derivatives of the equations of motion. State of the art approaches to this problem often use analytical methods based on the chain rule applied to existing dynamics algorithms. Although these methods are an improvement over finite differences in terms of accuracy, they are not always the most efficient. In this paper, we contribute new closed-form expressions for the first-order partial derivatives of inverse dynamics, leading to a recursive algorithm. The algorithm is benchmarked against chain-rule approaches in Fortran and against an existing algorithm from the Pinocchio library in C++. Tests consider computing the partial derivatives of inverse and forward dynamics for robots ranging from kinematic chains to humanoids and quadrupeds. Compared to the previous open-source Pinocchio implementation, our new analytical results uncover a key computational restructuring that enables efficiency gains. Speedups of up to 1.4x are reported for calculating the partial derivatives of inverse dynamics for the 50-dof Talos humanoid.
  <br>
+   <br>
   Skills used: C++, Fortran, Optimization, Spatial Vector Algebra
 </div>
 
@@ -57,6 +58,7 @@ horizontal: true
 
  <a href="https://www.sciencedirect.com/science/article/pii/S0094576519314705"> Multi Shooting Differential Dynamic Programming [MDDP]</a> algorithm is benchmarked for legged robotic models like the underactuated pendubot and the cart-pole system. Experiments are done to adjust the MDDP tuning parameters and safeguard settings for the feedback matrices B, C, and D. It is found that the safeguarding multipliers are sensitive to the problem type, and can range from 0.1 to 100,000.
  <br>
+ <br>
   Skills used: Fortran, Optimization
 </div>
 
@@ -80,6 +82,7 @@ horizontal: true
 
 This project is aimed at simulating the behavior of quadrupeds to move in urban environments (hallways, buildings, turns, etc.) The popular <a href="https://github.com/ethz-adrl/ifopt">TOWR (Trajectory Optimizer for Walking Robots) library</a> is used to implement obstacle avoidance constrained motion for quadrupeds. A number of constraints are implemented on the COM and legs of the quadruped to avoid cylindrical obstacles, make sharp turns, and reach a target. Depending on the target and obstacle positions, the quadruped chooses an optimal trajectory to reach in a given time. The entire coding framework is based on the IPOPT framework written in C++.
  <br>
+ <br>
   Skills used: C++, ROS, Optimization, IPOPT
 </div>
 
@@ -92,6 +95,8 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 
 Second-order optimization methods often use the Levenberg-Marquardt method to decide the step length. To improve the step length selection criteria, in this project, a trust region method based on Cholesky Decomposition used for second-order optimization algorithms is implemented. In the end, suggestions on the method are mentioned to use it for high degree-of-freedom systems like legged robots. This method is key in accelerating the use of the full second-order method for optimization-based robotics.
  <br>
+ <br>
+
   Skills used: MATLAB, Optimization
 [Slides](https://utexas.app.box.com/s/bccafh8wlntmo6qg7zzdijjgbtiy2qn7)
 
@@ -125,6 +130,7 @@ The problem of determining the future state of a satellite based on a set of obs
 
 The implementation of a collaborative air autonomy system of systems (SoS) on the Hoosier National Forest in Southern Indiana provides an effective means to combat fire threats. This study explores how to utilize air autonomy systems (UAVs) and ground-based systems (lookout towers and ground support vehicles) to detect forest fires more efficiently than isolated constituent systems. In order to support this analysis, an SoS was created through definition, abstraction, and implementation phases, including a research question motivated by the operational context, status quo, and barriers. The agent-based modeling (ABM) method was chosen to simulate the start and spreading of a forest fire and how the proposed systems take action against the fires. Before building the ABM of the targeted SoS, a paper model was developed to represent the real-world situation. The model was used to translate real-world behaviors into a MATLAB program. From the simulation, the two hypotheses formed were tested and a trade-space analysis was completed contrasting the response time. Performance Index) to the cost of implementation for the suggested architecture. This trade study revealed that the best balance between cost and performance was a system based on multiple watchtowers with medium ranges with UAV speed improvements as a primary investment.
  <br>
+  <br>
   Skills used: MATLAB, Agent Based Modeling, Systems-of-systems
 </div>
 
