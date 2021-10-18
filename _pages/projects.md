@@ -96,8 +96,8 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 Second-order optimization methods often use the Levenberg-Marquardt method to decide the step length. To improve the step length selection criteria, in this project, a trust region method based on Cholesky Decomposition used for second-order optimization algorithms is implemented. In the end, suggestions on the method are mentioned to use it for high degree-of-freedom systems like legged robots. This method is key in accelerating the use of the full second-order method for optimization-based robotics.
  <br>
  <br>
-
   Skills used: MATLAB, Optimization
+  <br>
 [Slides](https://utexas.app.box.com/s/bccafh8wlntmo6qg7zzdijjgbtiy2qn7)
 
 <br>
@@ -108,7 +108,9 @@ Second-order optimization methods often use the Levenberg-Marquardt method to de
 
 The problem of determining the future state of a satellite based on a set of observations is formulated and analyzed. Under the effect of various forces, the orbit of the satellite is estimated for 6 days using an Extended Kalman Filter formulation and is propagated for another day to report the state information in the ECI coordinate frame at the ∆V1 epoch. A high fidelity gravity model (20x20 non-spherical model) along with lunar, solar perturbations, solar radiation pressure, etc. are included for propagating the orbit and develop the analytical expressions required in the estimation process.
  <br>
+ <br>
   Skills used: MATLAB, Estimation, Navigation, Astrodynamics
+  <br>
 [Slides](https://utexas.app.box.com/file/868200772898?s=d2t6fiko0hhd11p4xg2piptrtow1c7w9)
 <br>
 <br>
