@@ -106,9 +106,9 @@ Second-order optimization methods often use the Levenberg-Marquardt method to de
 ## 5. Methods of Orbit Determination (Jan-May 2018)
 
 
-The problem of determining the future state of a satellite based on a set of observations formulated and analyzed. Under the effect of various forces, the orbit of the satellite is estimated for 6 days using an Extended Kalman Filter formulation and is propagated for another day to report the state information in the ECI coordinate frame at the ∆V1 epoch. A high fidelity gravity model (20x20 non-spherical model) along with lunar, solar perturbations, solar radiation pressure, etc. are included for propagating the orbit and develop the analytical expressions required in the estimation process.
+The problem of determining the future state of a satellite based on a set of observations is formulated and analyzed. Under the effect of various forces, the orbit of the satellite is estimated for 6 days using an Extended Kalman Filter formulation and is propagated for another day to report the state information in the ECI coordinate frame at the ∆V1 epoch. A high fidelity gravity model (20x20 non-spherical model) along with lunar, solar perturbations, solar radiation pressure, etc. are included for propagating the orbit and develop the analytical expressions required in the estimation process.
  <br>
-  Skills used: MATLAB, Estimation, Navigation
+  Skills used: MATLAB, Estimation, Navigation, Astrodynamics
 [Slides](https://utexas.app.box.com/file/868200772898?s=d2t6fiko0hhd11p4xg2piptrtow1c7w9)
 <br>
 <br>
