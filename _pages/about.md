@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-description: Ph.D Student, Aerospace Engineering, UT Austin.
+description: Roboticist, Aerospace Engineering, UT Austin.
 #description: <a href="#">UT Austin</a>. Address. Contacts. Moto. Etc.
 
 profile:
