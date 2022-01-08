@@ -1,7 +1,7 @@
 ---
 layout: post
-date: 2016-01-15 07:59:00-0400
+date: Dec'21
 inline: true
 ---
 
-A simple inline announcement with Markdown emoji! :sparkles: :smile:
+Paper titled 'Efficient Analytical Derivatives of Rigid-Body Dynamics using Spatial Vector Algebra' got accepted to IEEE RA-L 2021.
