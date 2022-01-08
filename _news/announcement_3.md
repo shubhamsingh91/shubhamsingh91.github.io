@@ -1,6 +1,6 @@
 ---
 layout: post
-date: Dec' 21
+date: Dec 2021
 inline: true
 ---
 
