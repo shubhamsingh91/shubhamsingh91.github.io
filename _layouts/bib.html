@@ -94,7 +94,10 @@
     {% endif %}
     {% if entry.preprint %}
         <a href="{{ entry.preprint }}" class="btn btn-sm z-depth-0" role="button" target="_blank">Preprint</a>
-    {% endif %}      
+    {% endif %}   
+    {% if entry.video %}
+    <a href="{{ entry.video }}" class="btn btn-sm z-depth-0" role="button" target="_blank">Video</a>
+  {% endif %}    
     {% if entry.pdf %}
       {% if entry.pdf contains '://' %}
       <a href="{{ entry.pdf }}" class="btn btn-sm z-depth-0" role="button">PDF</a>
