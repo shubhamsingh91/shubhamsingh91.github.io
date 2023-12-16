@@ -18,7 +18,11 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-I am a Ph.D. candidate at the University of Texas at Austin in the dept. of Aerospace Engineering. My research interests are mainly in the area of robotics, optimization, control, dynamic location, and systems engineering. Currently, I am working on designing efficient model-based algorithms for legged robotics for use in a Differential Dynamic Programming (DDP) based optimization method. For my Ph.D. work, I am advised by [Dr. Ryan Russell](http://sites.utexas.edu/russell/) and [Dr. Patrick Wensing](https://sites.nd.edu/pwensing/) (at Uni. Notre Dame). I completed my Master's degree in Aerospace Systems from Purdue University, where I was working in the [Systems-of-systems Lab](https://engineering.purdue.edu/SoSL), and [Rapid Design of Systems Lab](https://engineering.purdue.edu/RDSL/) under Dr. Michael Grant. During my Ph.D. program, I interned at Flexiv Robotics (Santa Clara) working towards contact aware MPC based controllers for manipulators.
+I recently finished my Ph.D. in Aerospace Engg. from the University of Texas at Austin, and currently work as a Locomotion Control Engineer at [Shift Robotics](https://shiftrobotics.io/) 
+
+in Austin TX. During my Ph.D, I worked on improving model-based control methods for planning & control of legged robots. Specifically, I developed analytical derivatives of Rigid-Body dynamics, which is used to model the non-linear physical model for legged motion. I was fortunate enough to publish in multiple IEEE conferences and journals including ICRA, IROS, Humanoids, RA-L and TR-O. For my Ph.D, I was advised jointly by [Dr. Ryan Russell](http://sites.utexas.edu/russell/) and [Dr. Patrick Wensing](https://sites.nd.edu/pwensing/) (at UND). During my Ph.D. program, I also interned at Flexiv Robotics (Santa Clara) working towards contact aware MPC based controllers for manipulators.
+
+I also participate as a reviewer for multiple IEEE conferences & journals, along with Springer Multibody System Dynamics, and the International Journal of Humanoid Robots (IJHR).
 
 In the past, I have worked on projects in the area of systems engineering for Mars mission architecture design, optimization for hypersonic mission design, and deep reinforcement learning for job scheduling algorithms.
 
