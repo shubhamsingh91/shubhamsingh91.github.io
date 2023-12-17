@@ -7,7 +7,38 @@ nav: true
 horizontal: true
 ---
 
-## 1. Analytical Partial Derivatives of Rigid Body Systems (2020-)
+
+## 1. Multi-Shooting DDP optimization for a for a 7-DoF Quadruped using Quasi-Newton (2020-2023)
+
+
+<div style="display:flex">
+     <div style="flex:1;padding-right:5px;">
+         <img src="/assets/img/DDP_images/9phase.gif" style="height:7cm;" class="center">
+             <figcaption> 9-phase Double-Gait trajectory for a 7-DoF planar quadruped</figcaption>     
+    </div>
+     <div style="flex:1;padding-left:5px;">
+        <img src="/assets/img/DDP_images/torque9phase.gif" style="height:7cm;" class="center">
+           <figcaption>  Torque history for the 9-phase trajectory</figcaption>   
+     </div>
+</div>
+
+<br>
+
+<div style="display:inline-block;vertical-align: middle;">
+
+Differential Dynamic Programming (DDP) is a popular technique used to generate motion for dynamic-legged robots in the recent past. However, in most cases, only the first-order partial derivatives of the underlying dynamics are used, resulting in the iLQR approach. Neglecting the second-order terms often slows down the convergence rate compared to full DDP. Multi-Shooting is another popular technique to improve robustness, especially if the dynamics are highly non-linear. In this work, we consider Multi-Shooting DDP for trajectory optimization of a bounding gait for a simplified quadruped model. As the main contribution, we develop Second-Order analytical partial derivatives of the rigid-body contact dynamics, extending our previous results for fixed/floating base models with multi-DoF joints. Finally, we show the benefits of a novel Quasi-Newton method for approximating second-order derivatives of the dynamics, leading to order-of-magnitude speedups in the
+convergence compared to the full DDP method. 
+ <br>
+   <br>
+  Skills used: C++, Fortran, Optimization, Spatial Vector Algebra
+</div>
+
+ [Code](https://github.com/shubhamsingh91/spatial_v2_extended) , [Paper](https://arxiv.org/abs/2307.12606)
+ 
+<br>
+<br>
+
+## 2. Analytical Partial Derivatives of Rigid Body Systems (2020-2023)
 
 
 <div style="display:flex">
@@ -35,7 +66,7 @@ horizontal: true
 <br>
 <br>
 
-## 2. Differential Dynamic Programming for Rigid Body Systems (2018-)
+## 3. Differential Dynamic Programming for Rigid Body Systems (2018-2023)
 
 
 <div style="display:flex">
@@ -66,7 +97,7 @@ horizontal: true
 <br>
 <br>
 
-## 3. TOWR for Urban Environments (Jan-May 2021)
+## 4. TOWR for Urban Environments (Jan-May 2021)
 
 
 <div style="display:flex">
@@ -90,7 +121,7 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 <br>
 <br>
 
-## 4. Trust Region Method Based on Cholesky Decomposition (Aug-Dec 2019)
+## 5. Trust Region Method Based on Cholesky Decomposition (Aug-Dec 2019)
 
 
 Second-order optimization methods often use the Levenberg-Marquardt method to decide the step length. To improve the step length selection criteria, in this project, a trust region method based on Cholesky Decomposition used for second-order optimization algorithms is implemented. In the end, suggestions on the method are mentioned to use it for high degree-of-freedom systems like legged robots. This method is key in accelerating the use of the full second-order method for optimization-based robotics.
@@ -103,7 +134,7 @@ Second-order optimization methods often use the Levenberg-Marquardt method to de
 <br>
 <br>
 
-## 5. Methods of Orbit Determination (Jan-May 2018)
+## 6. Methods of Orbit Determination (Jan-May 2018)
 
 
 The problem of determining the future state of a satellite based on a set of observations is formulated and analyzed. Under the effect of various forces, the orbit of the satellite is estimated for 6 days using an Extended Kalman Filter formulation and is propagated for another day to report the state information in the ECI coordinate frame at the ∆V1 epoch. A high fidelity gravity model (20x20 non-spherical model) along with lunar, solar perturbations, solar radiation pressure, etc. are included for propagating the orbit and develop the analytical expressions required in the estimation process.
@@ -117,7 +148,7 @@ The problem of determining the future state of a satellite based on a set of obs
 
 
 
-## 6. Collaborative Air Autonomy- System of Systems (Aug-Dec 2015)
+## 7. Collaborative Air Autonomy- System of Systems (Aug-Dec 2015)
 
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
