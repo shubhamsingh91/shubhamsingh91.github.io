@@ -61,6 +61,10 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+        # Set PAGES_REPO_NWO environment variable
+      - name: Set PAGES_REPO_NWO
+        run: echo "PAGES_REPO_NWO=shubhamsingh91/shubhamsingh91.github.io" >> $GITHUB_ENV
+        
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
