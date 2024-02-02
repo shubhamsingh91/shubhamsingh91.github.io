@@ -19,7 +19,7 @@ jobs:
     - name: Setup Ruby
       uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
       with:
-        ruby-version: 3.0
+        ruby-version: 3.2.2
     - name: Enable bundler cache
       uses: actions/cache@v2
       with:
