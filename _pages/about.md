@@ -18,11 +18,11 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-I finished my Ph.D. in Aerospace Engg. from the University of Texas at Austin, and currently work as a <b>Software Engineer</b> at [Apptronik](https://apptronik.com/) in Austin TX. 
+I finished my Ph.D. in Aerospace Engg. from the University of Texas at Austin, and currently work as a <b>Software Engineer- Legged Controls</b> at [Apptronik](https://apptronik.com/) in Austin TX. 
 
 During my Ph.D, I worked on improving model-based control methods for planning & control of legged robots. Specifically, I developed analytical derivatives of Rigid-Body dynamics, which is used to model the non-linear physical model for legged motion. I was fortunate enough to publish in multiple IEEE conferences and journals including ICRA, IROS, Humanoids, RA-L and TR-O. For my Ph.D, I was advised jointly by [Dr. Ryan Russell](http://sites.utexas.edu/russell/) and [Dr. Patrick Wensing](https://sites.nd.edu/pwensing/) (at UND). During my Ph.D. program, I also interned at Flexiv Robotics (Santa Clara) working towards contact aware MPC based controllers for manipulators.
 
-I also participate as a reviewer for multiple IEEE conferences & journals, along with Springer Multibody System Dynamics, Multibody System Dynamics (MBS), and the International Journal of Humanoid Robots (IJHR).
+I also participate as a reviewer for multiple IEEE conferences & journals, along with Springer Multibody System Dynamics, Multibody System Dynamics (MBS), and the International Journal of Humanoid Robots (IJHR). I am serving as the review editor for the Frontiers in AI and Robotics: Humanoid Robotics for 2025-26, and the associate editor for the ICAR 2025 conference, San Juan.
 
 In the past, I have worked on projects in the area of systems engineering for Mars mission architecture design, optimization for hypersonic mission design, and deep reinforcement learning for job scheduling algorithms.
 
