@@ -2,9 +2,9 @@
 layout: page
 title: projects
 permalink: /projects/
-description: 
+description:
 nav: true
-horizontal: true
+nav_order: 3
 ---
 
 
@@ -14,11 +14,11 @@ horizontal: true
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
          <img src="/assets/img/DDP_images/9phase.gif" style="height:7cm;" class="center">
-             <figcaption> 9-phase Double-Gait trajectory for a 7-DoF planar quadruped</figcaption>     
+             <figcaption> 9-phase Double-Gait trajectory for a 7-DoF planar quadruped</figcaption>
     </div>
      <div style="flex:1;padding-left:5px;">
         <img src="/assets/img/DDP_images/torque9phase.gif" style="height:7cm;" class="center">
-           <figcaption>  Torque history for the 9-phase trajectory</figcaption>   
+           <figcaption>  Torque history for the 9-phase trajectory</figcaption>
      </div>
 </div>
 
@@ -27,14 +27,14 @@ horizontal: true
 <div style="display:inline-block;vertical-align: middle;">
 
 Differential Dynamic Programming (DDP) is a popular technique used to generate motion for dynamic-legged robots in the recent past. However, in most cases, only the first-order partial derivatives of the underlying dynamics are used, resulting in the iLQR approach. Neglecting the second-order terms often slows down the convergence rate compared to full DDP. Multi-Shooting is another popular technique to improve robustness, especially if the dynamics are highly non-linear. In this work, we consider Multi-Shooting DDP for trajectory optimization of a bounding gait for a simplified quadruped model. As the main contribution, we develop Second-Order analytical partial derivatives of the rigid-body contact dynamics, extending our previous results for fixed/floating base models with multi-DoF joints. Finally, we show the benefits of a novel Quasi-Newton method for approximating second-order derivatives of the dynamics, leading to order-of-magnitude speedups in the
-convergence compared to the full DDP method. 
+convergence compared to the full DDP method.
  <br>
    <br>
   Skills used: C++, Fortran, Optimization, Spatial Vector Algebra
 </div>
 
  [Code](https://github.com/shubhamsingh91/spatial_v2_extended) , [Paper](https://arxiv.org/abs/2307.12606)
- 
+
 <br>
 <br>
 
@@ -44,11 +44,11 @@ convergence compared to the full DDP method.
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
          <img src="/assets/img/DDP_images/arxiv1.png" style="height:7cm;" class="center">
-             <figcaption>  CPU Runtime for Floating Base Robots</figcaption>     
+             <figcaption>  CPU Runtime for Floating Base Robots</figcaption>
     </div>
      <div style="flex:1;padding-left:5px;">
         <img src="/assets/img/DDP_images/arxiv2.png" style="height:7cm;" class="center">
-           <figcaption>  CPU Runtime for serial/branched chains</figcaption>   
+           <figcaption>  CPU Runtime for serial/branched chains</figcaption>
      </div>
 </div>
 <br>
@@ -62,7 +62,7 @@ convergence compared to the full DDP method.
 </div>
 
  [Code](https://github.com/shubhamsingh91/pinocchio) , [Paper](https://arxiv.org/abs/2105.05102)
- 
+
 <br>
 <br>
 
@@ -73,15 +73,15 @@ convergence compared to the full DDP method.
      <div style="flex:1;padding-right:5px;">
             <img src="/assets/img/DDP_images/cartpole.gif" style="height:5cm;">
             <figcaption>Cart-Pole System</figcaption>
-      </div>       
+      </div>
      <div style="flex:1;padding-left:5px;">
             <img src="/assets/img/DDP_images/pendu1.gif" style="height:5cm;">
             <figcaption>Pendu-bot control (with only &tau; <sub>1</sub>) using DDP </figcaption>
-      </div>     
+      </div>
    <div style="flex:1;padding-left:5px;">
             <img src="/assets/img/DDP_images/pendu2.gif" style="height:5cm;">
             <figcaption>Pendu-bot control (with only &tau; <sub>2</sub>) using DDP </figcaption>
-      </div>                 
+      </div>
 </div>
 <br>
 
@@ -104,7 +104,7 @@ convergence compared to the full DDP method.
      <div style="flex:1;padding-right:5px;">
             <img src="/assets/img/TOWR_images/turns.gif" style="height:6cm;">
             <figcaption>Modified Terrain for Right Turn</figcaption>
-      </div>                
+      </div>
 </div>
 
 <br>
@@ -154,7 +154,7 @@ The problem of determining the future state of a satellite based on a set of obs
      <div style="flex:1;padding-right:5px;">
             <img src="/assets/img/DDP_images/sos.png" style="height:8cm;" >
               <figcaption>ABM Simulation Space </figcaption>
-      </div>                
+      </div>
 </div>
 <br>
 
