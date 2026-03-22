@@ -8,7 +8,32 @@ nav_order: 3
 ---
 
 
-## 1. Multi-Shooting DDP optimization for a for a 7-DoF Quadruped using Quasi-Newton (2020-2023)
+## 1. Operational Space Control for a 7-DOF Franka Panda Arm (2026)
+
+
+<div style="display:flex">
+     <div style="flex:1;padding-right:5px;">
+         <img src="/assets/img/osc_demo.gif" style="height:7cm;" class="center">
+             <figcaption> OSC task-space tracking with null-space posture control</figcaption>
+    </div>
+</div>
+
+<br>
+
+<div style="display:inline-block;vertical-align: middle;">
+
+A from-scratch implementation of Khatib's Operational Space Control (OSC) formulation for a 7-DOF Franka Panda arm in PyBullet. The controller features task-space PD control with feedforward acceleration, a damped pseudo-inverse for singularity robustness, and null-space posture control to prevent elbow drift. A minimum-jerk trajectory generator provides smooth reference tracking. The system mirrors a real robot control stack with a multi-rate loop: 1 kHz for OSC torque computation and physics, 200 Hz for trajectory updates, and 5 Hz for goal input. Dynamics (mass matrix, Coriolis, Jacobians) are computed via Pinocchio.
+ <br>
+   <br>
+  Skills used: Python, PyBullet, Pinocchio, Operational Space Control, Trajectory Optimization
+</div>
+
+ [Code](https://github.com/shubhamsingh91/osc_control)
+
+<br>
+<br>
+
+## 2. Multi-Shooting DDP optimization for a for a 7-DoF Quadruped using Quasi-Newton (2020-2023)
 
 
 <div style="display:flex">
@@ -38,7 +63,7 @@ convergence compared to the full DDP method.
 <br>
 <br>
 
-## 2. Analytical Partial Derivatives of Rigid Body Systems (2020-2023)
+## 3. Analytical Partial Derivatives of Rigid Body Systems (2020-2023)
 
 
 <div style="display:flex">
@@ -66,7 +91,7 @@ convergence compared to the full DDP method.
 <br>
 <br>
 
-## 3. Differential Dynamic Programming for Rigid Body Systems (2018-2023)
+## 4. Differential Dynamic Programming for Rigid Body Systems (2018-2023)
 
 
 <div style="display:flex">
@@ -97,7 +122,7 @@ convergence compared to the full DDP method.
 <br>
 <br>
 
-## 4. TOWR for Urban Environments (Jan-May 2021)
+## 5. TOWR for Urban Environments (Jan-May 2021)
 
 
 <div style="display:flex">
@@ -121,7 +146,7 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 <br>
 <br>
 
-## 5. Trust Region Method Based on Cholesky Decomposition (Aug-Dec 2019)
+## 6. Trust Region Method Based on Cholesky Decomposition (Aug-Dec 2019)
 
 
 Second-order optimization methods often use the Levenberg-Marquardt method to decide the step length. To improve the step length selection criteria, in this project, a trust region method based on Cholesky Decomposition used for second-order optimization algorithms is implemented. In the end, suggestions on the method are mentioned to use it for high degree-of-freedom systems like legged robots. This method is key in accelerating the use of the full second-order method for optimization-based robotics.
@@ -134,7 +159,7 @@ Second-order optimization methods often use the Levenberg-Marquardt method to de
 <br>
 <br>
 
-## 6. Methods of Orbit Determination (Jan-May 2018)
+## 7. Methods of Orbit Determination (Jan-May 2018)
 
 
 The problem of determining the future state of a satellite based on a set of observations is formulated and analyzed. Under the effect of various forces, the orbit of the satellite is estimated for 6 days using an Extended Kalman Filter formulation and is propagated for another day to report the state information in the ECI coordinate frame at the ∆V1 epoch. A high fidelity gravity model (20x20 non-spherical model) along with lunar, solar perturbations, solar radiation pressure, etc. are included for propagating the orbit and develop the analytical expressions required in the estimation process.
@@ -148,7 +173,7 @@ The problem of determining the future state of a satellite based on a set of obs
 
 
 
-## 7. Collaborative Air Autonomy- System of Systems (Aug-Dec 2015)
+## 8. Collaborative Air Autonomy- System of Systems (Aug-Dec 2015)
 
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
