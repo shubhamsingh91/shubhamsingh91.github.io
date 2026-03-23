@@ -9,13 +9,13 @@ nav_order: 5
 
 ## Peer Review Contributions
 
-A total of **88 verified peer reviews** across leading robotics and controls journals and conferences (source: [Web of Science](https://www.webofscience.com)).
+A total of **92 verified peer reviews** across leading robotics and controls journals and conferences (source: [Web of Science](https://www.webofscience.com/wos/author/record/GWR-2185-2022)).
 
 | Journal / Conference | Reviews |
 |---|--:|
-| IEEE Robotics and Automation Letters | 14 |
-| International Journal of Control, Automation and Systems | 11 |
-| IEEE/ASME Transactions on Mechatronics | 9 |
+| IEEE Robotics and Automation Letters | 18 |
+| IEEE/ASME Transactions on Mechatronics | 14 |
+| International Journal of Control, Automation and Systems | 14 |
 | Journal of Mechanisms and Robotics | 5 |
 | IEEE International Conference on Intelligent Robots and Systems (IROS) | 5 |
 | IEEE International Conference on Robotics and Automation (ICRA) | 5 |
