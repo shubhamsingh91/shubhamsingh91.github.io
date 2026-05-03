@@ -4,7 +4,7 @@ permalink: /reviewing/
 title: Academic Reviewing
 description: Peer review contributions and editorial board memberships.
 nav: true
-nav_order: 5
+nav_order: 4
 ---
 
 ## Peer Review Contributions

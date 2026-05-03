@@ -4,9 +4,61 @@ title: projects
 permalink: /projects/
 description:
 nav: true
-nav_order: 3
+nav_order: 2
 ---
 
+## Deployment case studies
+
+### 1. Apollo humanoid release integration
+
+**Context:** [Apollo](https://apptronik.com/apollo) is Apptronik's general-purpose humanoid robot platform. My work sits in the legged controls stack, where controller behavior has to survive the transition from simulation and subsystem tests to an integrated robot operating under release pressure.
+
+**My role:** I worked on whole-body MPC controller integration, state estimation, whole-body motion planning, teleoperation-related validation, and on-robot hardware debugging across the integrated stack.
+
+**Deployment constraints:** Release work required fast iteration across software, hardware, application engineering, and systems teams. The main challenge was not only whether the controller worked in isolation, but whether the robot behavior remained valid when perception, teleop, hardware, and demo workflows were exercised together.
+
+**Outcome:** Supported public-release integration and live demo readiness by validating controller behavior on hardware, debugging integration issues in real time, and helping de-risk customer-facing robot demonstrations.
+
+**Stack:** Whole-body MPC, state estimation, C++, CasADi/codegen, robot hardware validation, Git.
+
+<br>
+
+### 2. Moonwalkers product deployment at Shift Robotics
+
+**Context:** Moonwalkers are robotic mobility devices shipped to end users by [Shift Robotics](https://shiftrobotics.io/products/moonwalkers). The control software has to feel intuitive to first-time users while remaining reliable on deployed hardware.
+
+<div class="text-center">
+  <img src="/assets/img/moonwalkers-deployment.jpeg" alt="Shubham at a Moonwalkers deployment demo" class="img-fluid rounded z-depth-1" style="max-height: 520px;">
+  <figcaption>Moonwalkers deployment demo at CES 2024.</figcaption>
+</div>
+
+<br>
+
+**My role:** I owned gait control and sensing software in [Shift OS](https://shiftrobotics.io/blogs/blog/shiftos-2-0), including calibration/training workflows and gait sensing improvements driven by user feedback.
+
+**Deployment constraints:** The product had to work across different users, walking styles, environments, demo conditions, and hardware units. Field feedback mattered because small sensing or calibration issues directly affected user trust.
+
+**Outcome:** Shipped user-facing control improvements documented in the [Shift OS 2.0 release notes](https://help.shiftrobotics.io/en-US/shiftos-20-release-notes-401579), improved gait sensing intuitiveness through field testing, supported live demos at CES 2024 and university campuses, and helped troubleshoot deployed hardware/software issues in real time.
+
+**Stack:** Classical control, estimation, sensor fusion, biomechanics, embedded systems, C/C++, Python, hardware troubleshooting.
+
+<br>
+
+### 3. Contact-aware MPC hardware validation at Flexiv Robotics
+
+**Context:** During my internship at Flexiv Robotics, I worked on validating a contact-aware MPC force controller for a 7-DoF manipulator.
+
+**My role:** I bridged simulation and hardware validation, connecting PyBullet-based development to a real robot control workflow through LCM communication.
+
+**Deployment constraints:** Contact-rich manipulation required validating controller behavior beyond simulation, with attention to timing, force response, and consistency between the model and hardware behavior.
+
+**Outcome:** Validated the controller across simulation and hardware, helping close the gap between algorithm development and robot execution.
+
+**Stack:** MPC, trajectory optimization, PyBullet, LCM, C++, Python.
+
+<br>
+
+## Research and technical projects
 
 ## 1. Operational Space Control for a 7-DOF Franka Panda Arm (2026)
 

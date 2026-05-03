@@ -4,7 +4,7 @@ permalink: /resume/
 title: resume
 description:
 pdf_file: "/assets/pdf/resume.pdf"
-nav: true
+nav: false
 nav_order: 6
 ---
 
