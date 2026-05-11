@@ -101,7 +101,10 @@ snapshot.
 Three adapters (Drake AutoDiffXd, JaxSim `jax.grad`, Pinocchio analytical) agree
 with FD to one part in $10^{7}$; cosine similarity rounds to 1.0000. MJX cosine
 similarity is $-0.13$ on the same problem — a documented sm_120 (RTX 5060) XLA
-compile pathology, not an MJX-the-library bug.
+compile pathology, not an MJX-the-library bug. Newton's gradient is correct on
+the chain robot (0.5% rel error vs FD at $\epsilon = 10^{-2}$) but breaks on the
+Panda (cosine sim $= 0$, rel error $\sim 10^{30}$) — looks like tape-state
+contamination across the FD reference's $\sim 45$ perturbations.
 
 ### Exp 2 — wall-clock per call on Panda
 
@@ -120,9 +123,9 @@ JAX-compiled-Python step at this size.
 ### Exp 3 — scaling with chain DoF count
 
 <div style="display:flex; gap:1em; justify-content:center; flex-wrap:wrap;">
-  <img src="/assets/img/sim_diff_bench/exp3_step_scaling_drake_vs_genesis_vs_jaxsim_vs_pinocchio_vs_tds.png"
+  <img src="/assets/img/sim_diff_bench/exp3_step_scaling_drake_vs_genesis_vs_jaxsim_vs_newton_vs_pinocchio_vs_tds.png"
        alt="Exp3 step scaling" style="max-width:48%; height:auto;"/>
-  <img src="/assets/img/sim_diff_bench/exp3_gradient_scaling_drake_vs_genesis_vs_jaxsim_vs_pinocchio_vs_tds.png"
+  <img src="/assets/img/sim_diff_bench/exp3_gradient_scaling_drake_vs_genesis_vs_jaxsim_vs_newton_vs_pinocchio_vs_tds.png"
        alt="Exp3 gradient scaling" style="max-width:48%; height:auto;"/>
 </div>
 
@@ -158,12 +161,12 @@ reduction is the regime where the gradient advantage becomes visible.
 
 | Adapter | Forward | Gradient | AD Direction | Notes |
 |---|---|---|---|---|
-| pinocchio | ok | ok (analytical) | --- | Primary RBD ground truth; fastest (~16 µs/step on Panda) |
-| drake | ok | ok (AutoDiffXd) | forward | discrete-time + manual semi-implicit Euler |
-| mjx | ok | ok (jacfwd) | forward | XLA compile slow on sm_120; gradient cosine sim ≈ −0.13 on Panda |
-| jaxsim | ok | ok (jax.grad) | reverse | URDF preprocessor injects jaxsim_base_link anchor |
-| brax | ok | ok (jax.grad) | reverse | MjSpec round-trip; menagerie Panda triggers upstream vmap bug |
-| newton | ok | ok (warp.Tape) | reverse | warp.sim's successor; CPU-pinned (sm_120 GPU path immature) |
+| pinocchio | ok | ok (analytical) | --- | Primary RBD ground truth; fastest (~16 µs/step on Panda); Exp1 cosine = 1.0000 |
+| drake | ok | ok (AutoDiffXd) | forward | discrete-time + manual semi-implicit Euler; Exp1 cosine = 1.0000 |
+| mjx | ok | failed (jacfwd) | forward | Exp1 cosine sim ≈ −0.13 on Panda (sm_120 XLA compile pathology) |
+| jaxsim | ok | ok (jax.grad) | reverse | URDF preprocessor injects jaxsim_base_link anchor; Exp1 cosine = 1.0000 |
+| brax | ok | partial (jax.grad) | reverse | MjSpec round-trip; menagerie Panda Exp1/2/5 fail (upstream vmap mismatch); Exp4 SHAC works on chain_3 |
+| newton | ok | partial (warp.Tape) | reverse | warp.sim's successor; CPU-pinned (sm_120 GPU path immature); 0.5% rel err on chain, but Exp1 cosine = 0 on Panda (tape contamination, fix tracked) |
 | genesis | ok | --- | --- | Gradients via checkpoint API; not exposed through our pure-function contract |
 | tds | ok | --- | --- | pip wheel ships double-typed instantiation; CppAD bindings absent |
 
@@ -188,6 +191,13 @@ Phase 3 added floating-base SE(3) support for Pinocchio (with tangent-space Jaco
 4. **Newton gravity sign** — Newton stores gravity as a *signed* scalar along its
    `up_vector`. Passing the positive vector norm (the obvious thing) flipped
    gravity skyward. Caught by the cross-adapter pendulum agreement test.
+5. **Newton gradient correct on chain, broken on Panda** — same `warp.Tape`
+   code path reproduces FD to 0.5 % relative error on the 3-DoF chain
+   ($\epsilon = 10^{-2}$, FP32 noise floor at smaller $\epsilon$) but produces a
+   cosine similarity of exactly 0 (i.e. orthogonal noise) on the Panda Exp1.
+   Reproducible, isolated to the Panda-sized rollout. Likely tape-state
+   contamination across the FD reference's $\sim 45$ perturbations; a
+   per-perturbation fresh tape is the obvious next thing to try.
 
 ---
 
