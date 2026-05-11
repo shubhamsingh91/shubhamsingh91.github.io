@@ -2,202 +2,168 @@
 layout: page
 permalink: /sim_diff_bench/
 title: diff-sim benchmark
-description: A live, reproducible benchmark of 8 differentiable rigid-body simulators (May 2026).
+description: A unified benchmark of eight differentiable rigid-body simulators (May 2026).
 nav: true
 nav_order: 4
 ---
 
-A unified benchmark of **eight** differentiable rigid-body simulators behind a single
-process-agnostic adapter contract — comparing forward dynamics, per-step Jacobians,
-rollout-cost gradients, learning curves, and usability across the field.
+Eight differentiable rigid-body simulators wired into a single
+`SimulatorAdapter` contract, exercised by five experiments and a
+shared methodology gate. Targeted venue: ICRA 2027.
 
-> Source: [github.com/shubhamsingh91/sim_diff](https://github.com/shubhamsingh91/sim_diff)
-> &nbsp;·&nbsp;
-> Latest report: [report.pdf](/assets/pdf/sim_diff_bench_report.pdf)
-> &nbsp;·&nbsp;
-> Targeted venue: ICRA 2027.
+[paper PDF](/assets/pdf/sim_diff_bench_report.pdf){: .btn} &nbsp;
+[repo (private)](https://github.com/shubhamsingh91/sim_diff){: .btn}
 
 ---
 
-## What's actually being simulated?
+## TL;DR — gradient correctness on the Franka Panda
 
-All five experiments use one of two robot bodies, chosen to isolate "is the gradient
-correct?" from "is contact correct?" The simulations below are produced by Pinocchio's
-analytical forward dynamics (the primary RBD ground truth in our methodology); every
-adapter is then asked to reproduce the *gradient* of the same rollout cost and is
-benchmarked against finite-difference reference.
+The headline result. Each adapter's `gradient_rollout_cost` is
+compared against a central finite-difference reference at $h = \sqrt{\epsilon}$
+on a 5-step rollout of the Franka Panda from $q = 0$, $v = 0$ with
+random torques.
 
-### Scenario A — Franka Panda under random torques (Exp 1, 2, 5)
+| Adapter   | rel. $L^2$  | rel. $L^\infty$ | cosine sim. | status |
+|-----------|------------:|----------------:|------------:|--------|
+| pinocchio | 8.82 × 10⁻⁸ | 1.88 × 10⁻⁷    | **1.0000**  | ok |
+| drake     | 1.37 × 10⁻⁷ | 2.42 × 10⁻⁷    | **1.0000**  | ok |
+| jaxsim    | 7.53 × 10⁻⁸ | 9.72 × 10⁻⁸    | **1.0000**  | ok |
+| brax      | —           | —               | —           | failed (Panda MJCF upstream bug) |
+| mjx       | 1.00        | 1.00            | −0.13       | failed (sm_120 XLA compile pathology) |
+| newton    | 1.5 × 10³⁰  | 7.2 × 10²⁹     | 0.00        | failed (tape contamination on Panda; ok on chain) |
+| genesis   | —           | —               | —           | gradient not exposed in Python |
+| tds       | —           | —               | —           | gradient bindings absent from the wheel |
 
-A 7-DoF Franka Panda arm starting from the home configuration, with small random
-torques applied for 50 steps at $\Delta t = 10^{-3}$ s. We compare each adapter's
-gradient $\partial J / \partial u$ against central-difference FD, measure step /
-rollout / gradient wall-clock, and time the import + first-step path.
-
-<div style="display:flex; justify-content:center;">
-  <img src="/assets/img/sim_diff_bench/demo_panda_random_torques.gif"
-       alt="Franka Panda demo rollout" style="max-width:90%; height:auto;"/>
-</div>
-<div class="caption" style="text-align:center;">
-  Exp1 / Exp2 / Exp5 scenario — the Panda arm motion the gradient benchmark is built around.
-</div>
-
-### Scenario B — Parametric chain robot (Exp 3, 4)
-
-A planar $N$-link revolute kinematic chain, $N \in \{3, 6, 12, 24, 48\}$. Used for
-the scaling sweep (Exp 3) and for the learning experiment (Exp 4 on $N=3$). Same
-torques scale, same dynamics, just more DoFs.
-
-<div style="display:flex; justify-content:center;">
-  <img src="/assets/img/sim_diff_bench/demo_chain_random_torques.gif"
-       alt="3-DoF chain demo rollout" style="max-width:75%; height:auto;"/>
-</div>
-<div class="caption" style="text-align:center;">
-  Exp3 scenario — chain_3 under random torques. The scaling sweep runs the same
-  setup at 6, 12, 24, 48 DoFs.
-</div>
-
-### Scenario C — SHAC vs untrained policy on chain_3 (Exp 4)
-
-Same 3-DoF chain, started from a non-trivial pose, controlled by a tanh-MLP policy.
-Quadratic cost target is the upright zero state with damped velocity. **Left:** the
-untrained random policy lets the chain swing freely. **Right:** after 80 SHAC
-iterations (gradient-based, using each adapter's `jacobian_step`), the policy drives
-the chain back toward the origin within the horizon.
-
-<div style="display:flex; flex-wrap:wrap; gap:1em; justify-content:center;">
-  <div style="flex:1; min-width:280px; max-width:48%;">
-    <img src="/assets/img/sim_diff_bench/demo_shac_initial.gif"
-         alt="Untrained policy rollout" style="width:100%;"/>
-    <div class="caption" style="text-align:center;">
-      Untrained policy — initial cost $J \approx 113$.
-    </div>
-  </div>
-  <div style="flex:1; min-width:280px; max-width:48%;">
-    <img src="/assets/img/sim_diff_bench/demo_shac_trained.gif"
-         alt="SHAC-trained policy rollout" style="width:100%;"/>
-    <div class="caption" style="text-align:center;">
-      After 80 SHAC iters — final cost $J \approx 13$ (≈9× reduction).
-    </div>
-  </div>
-</div>
-
----
-
-## Headline results
-
-The figures below are produced by `scripts/run_phase1.py` and live at
-`results/phase1/figures/` in the repo. They are updated automatically by each
-`./scripts/reproduce.sh` run; the ones below are the most recent autonomous-coding
-snapshot.
-
-### Exp 1 — gradient correctness vs central FD on Panda
+Three of eight adapters (Pinocchio analytical RBD, Drake `AutoDiffXd`,
+JaxSim `jax.grad`) agree with FD to one part in $10^7$. The remaining
+five fail in *different and informative* ways, summarised in the
+findings section below.
 
 <div style="display:flex; justify-content:center;">
   <img src="/assets/img/sim_diff_bench/exp1_gradient_correctness.png"
-       alt="Exp1 gradient correctness" style="max-width:80%; height:auto;"/>
+       alt="Exp1 gradient correctness bar chart" style="max-width:80%;"/>
 </div>
 
-Three adapters (Drake AutoDiffXd, JaxSim `jax.grad`, Pinocchio analytical) agree
-with FD to one part in $10^{7}$; cosine similarity rounds to 1.0000. MJX cosine
-similarity is $-0.13$ on the same problem — a documented sm_120 (RTX 5060) XLA
-compile pathology, not an MJX-the-library bug. Newton's gradient is correct on
-the chain robot (0.5% rel error vs FD at $\epsilon = 10^{-2}$) but breaks on the
-Panda (cosine sim $= 0$, rel error $\sim 10^{30}$) — looks like tape-state
-contamination across the FD reference's $\sim 45$ perturbations.
+---
 
-### Exp 2 — wall-clock per call on Panda
+## Robots in the benchmark
+
+Four robots are loadable through the adapter contract. Panda and the
+parametric chain are exercised by every experiment; Go2, G1, and
+Allegro landed in Phase 3 and are wired through forward dynamics +
+floating-base SE(3) integration, but the locomotion / manipulation
+task suite (Phase 4+) is still ahead.
+
+<div style="display:flex; flex-wrap:wrap; gap:1em; justify-content:center;">
+  <figure style="flex:1; min-width:240px; max-width:24%; text-align:center;">
+    <img src="/assets/img/sim_diff_bench/demo_panda.gif" alt="Franka Panda" style="width:100%;"/>
+    <figcaption><b>Franka Panda</b><br/>7-DoF arm, fixed base. Used by Exp1/2/5.</figcaption>
+  </figure>
+  <figure style="flex:1; min-width:240px; max-width:24%; text-align:center;">
+    <img src="/assets/img/sim_diff_bench/demo_go2.gif" alt="Unitree Go2" style="width:100%;"/>
+    <figcaption><b>Unitree Go2</b><br/>12-DoF quadruped + 6-DoF floating base. Phase 3.</figcaption>
+  </figure>
+  <figure style="flex:1; min-width:240px; max-width:24%; text-align:center;">
+    <img src="/assets/img/sim_diff_bench/demo_g1.gif" alt="Unitree G1" style="width:100%;"/>
+    <figcaption><b>Unitree G1</b><br/>29-DoF humanoid + 6-DoF floating base. Phase 3.</figcaption>
+  </figure>
+  <figure style="flex:1; min-width:240px; max-width:24%; text-align:center;">
+    <img src="/assets/img/sim_diff_bench/demo_allegro.gif" alt="Wonik Allegro" style="width:100%;"/>
+    <figcaption><b>Wonik Allegro</b><br/>16-DoF dexterous hand, fixed base. Phase 3.</figcaption>
+  </figure>
+</div>
+
+<div class="caption" style="text-align:center; font-size:90%; margin-top:0.5em;">
+  GIFs are rendered from MuJoCo MJCF via the offscreen renderer. Go2 and G1 are
+  shown in passive freefall — the contact-rich locomotion/sliding/impact
+  task suite is Phase 4+ scope.
+</div>
+
+A parametric **chain robot** (planar N-link revolute, $N \in
+\{3, 6, 12, 24, 48\}$) is also used for the scaling sweep (Exp3) and
+the learning experiment (Exp4 on chain_3).
+
+---
+
+## Other experiments
+
+### Exp2 — wall-clock timing on the Panda
 
 <div style="display:flex; gap:1em; justify-content:center; flex-wrap:wrap;">
   <img src="/assets/img/sim_diff_bench/exp2_step_timing.png"
-       alt="Exp2 step timing" style="max-width:48%; height:auto;"/>
+       alt="Exp2 step timing" style="max-width:48%;"/>
   <img src="/assets/img/sim_diff_bench/exp2_gradient_timing.png"
-       alt="Exp2 gradient timing" style="max-width:48%; height:auto;"/>
+       alt="Exp2 gradient timing" style="max-width:48%;"/>
 </div>
 
-Pinocchio's analytical ABA is the obvious winner — two orders of magnitude faster
-than the AD-routed paths on both step and gradient. Drake's `AutoDiffXd` pays a
-$2\times$ step-time tax for AD support but is still $50\times$ faster than JaxSim's
-JAX-compiled-Python step at this size.
+Pinocchio analytical ABA: 16 µs/step, 1.9 ms/gradient — the obvious
+floor. Drake's `AutoDiffXd` is 2× slower per step but still 50× faster
+than the JAX-traced paths (JaxSim, Newton) at this size.
 
-### Exp 3 — scaling with chain DoF count
+### Exp3 — scaling with chain DoF count
 
 <div style="display:flex; gap:1em; justify-content:center; flex-wrap:wrap;">
   <img src="/assets/img/sim_diff_bench/exp3_step_scaling_drake_vs_genesis_vs_jaxsim_vs_newton_vs_pinocchio_vs_tds.png"
-       alt="Exp3 step scaling" style="max-width:48%; height:auto;"/>
+       alt="Exp3 step scaling" style="max-width:48%;"/>
   <img src="/assets/img/sim_diff_bench/exp3_gradient_scaling_drake_vs_genesis_vs_jaxsim_vs_newton_vs_pinocchio_vs_tds.png"
-       alt="Exp3 gradient scaling" style="max-width:48%; height:auto;"/>
+       alt="Exp3 gradient scaling" style="max-width:48%;"/>
 </div>
 
-Pinocchio's step exponent $b \approx 0.46$ confirms ABA's empirical near-linear cost
-in $N$ on small chains. Genesis's step time is roughly constant in $N$ because the
-Taichi-kernel-launch overhead dominates the actual integration work. TDS shows mild
-super-linear scaling.
+Pinocchio's step exponent $b \approx 0.46$ confirms ABA's empirical
+near-linear cost. Genesis is flat: Taichi kernel-launch overhead
+dominates the actual integration at these sizes.
 
-### Exp 4 — SHAC (gradient-based) vs CEM (gradient-free)
+### Exp4 — gradient-based (SHAC) vs gradient-free (CEM)
 
 <div style="display:flex; gap:1em; justify-content:center; flex-wrap:wrap;">
   <img src="/assets/img/sim_diff_bench/exp4_shac_cost_reduction.png"
-       alt="Exp4 SHAC cost reduction" style="max-width:48%; height:auto;"/>
+       alt="Exp4 SHAC cost reduction" style="max-width:48%;"/>
   <img src="/assets/img/sim_diff_bench/exp4_cem_cost_reduction.png"
-       alt="Exp4 CEM cost reduction" style="max-width:48%; height:auto;"/>
+       alt="Exp4 CEM cost reduction" style="max-width:48%;"/>
 </div>
 
-SHAC's cost-reduction ratio agrees to four digits across three gradient-capable
-adapters (Drake, JaxSim, Pinocchio) — confirming the simulator gradient is being
-delivered and used identically. CEM is the gradient-free baseline; its slower
-reduction is the regime where the gradient advantage becomes visible.
+Methodology gate: the four gradient-capable adapters that work on
+chain_3 (Drake, JaxSim, Newton, Pinocchio) reduce cost by 1.02× —
+identical to four digits. That confirms the gradient signal is being
+delivered and used the same way across implementations.
 
-### Exp 5 — usability snapshot
+### Exp5 — import/load/first-step time + LOC
 
 <div style="display:flex; justify-content:center;">
   <img src="/assets/img/sim_diff_bench/exp5_usability.png"
-       alt="Exp5 usability" style="max-width:80%; height:auto;"/>
+       alt="Exp5 usability" style="max-width:80%;"/>
 </div>
 
----
-
-## Adapter matrix (status snapshot)
-
-| Adapter | Forward | Gradient | AD Direction | Notes |
-|---|---|---|---|---|
-| pinocchio | ok | ok (analytical) | --- | Primary RBD ground truth; fastest (~16 µs/step on Panda); Exp1 cosine = 1.0000 |
-| drake | ok | ok (AutoDiffXd) | forward | discrete-time + manual semi-implicit Euler; Exp1 cosine = 1.0000 |
-| mjx | ok | failed (jacfwd) | forward | Exp1 cosine sim ≈ −0.13 on Panda (sm_120 XLA compile pathology) |
-| jaxsim | ok | ok (jax.grad) | reverse | URDF preprocessor injects jaxsim_base_link anchor; Exp1 cosine = 1.0000 |
-| brax | ok | partial (jax.grad) | reverse | MjSpec round-trip; menagerie Panda Exp1/2/5 fail (upstream vmap mismatch); Exp4 SHAC works on chain_3 |
-| newton | ok | partial (warp.Tape) | reverse | warp.sim's successor; CPU-pinned (sm_120 GPU path immature); 0.5% rel err on chain, but Exp1 cosine = 0 on Panda (tape contamination, fix tracked) |
-| genesis | ok | --- | --- | Gradients via checkpoint API; not exposed through our pure-function contract |
-| tds | ok | --- | --- | pip wheel ships double-typed instantiation; CppAD bindings absent |
-
-Phase 3 added floating-base SE(3) support for Pinocchio (with tangent-space Jacobians via `pin.dIntegrate`), a Newton gravity-sign correction, MJX native batched rollouts via `jax.vmap`, and a unified spring-damper drop-and-rest analytic reference for cross-adapter contact validation.
+JAX initialization eats ~3.9 s of JaxSim's first step; Newton's 200 ms
+first step is Warp's JIT kernel compile. Adapter LOC sits in a narrow
+239–494 range across all eight — the contract is at the right level
+of abstraction.
 
 ---
 
-## Findings the bench surfaces
+## Findings
 
-1. **MJX on sm_120 (Blackwell)** — `jit_rollout_cost` takes ~60 minutes of XLA
-   compilation on the RTX 5060 and produces a gradient with cosine similarity
-   $-0.13$ vs FD. Reproducible, isolated, and worth its own paragraph in the paper.
-2. **Brax pipeline vs menagerie Panda** — Brax's `generalized.pipeline.init`
-   raises `vmap got inconsistent sizes` on the Panda MJCF. Chain models compile
-   fine; upstream Brax (deprecated) is unlikely to be fixed.
-3. **"Differentiable" simulators whose differentiability isn't reachable from
-   Python** — Genesis exposes gradients through a checkpoint-style API that
-   doesn't compose with our pure-function `gradient_rollout_cost` contract.
-   TDS's pip wheel only ships the plain-`double` instantiation; the CppAD bindings
-   exist in-tree but aren't wired into Python. Both are real findings about the
-   gap between *labelled* and *practically usable* AD.
-4. **Newton gravity sign** — Newton stores gravity as a *signed* scalar along its
-   `up_vector`. Passing the positive vector norm (the obvious thing) flipped
-   gravity skyward. Caught by the cross-adapter pendulum agreement test.
-5. **Newton gradient correct on chain, broken on Panda** — same `warp.Tape`
-   code path reproduces FD to 0.5 % relative error on the 3-DoF chain
-   ($\epsilon = 10^{-2}$, FP32 noise floor at smaller $\epsilon$) but produces a
-   cosine similarity of exactly 0 (i.e. orthogonal noise) on the Panda Exp1.
-   Reproducible, isolated to the Panda-sized rollout. Likely tape-state
-   contamination across the FD reference's $\sim 45$ perturbations; a
-   per-perturbation fresh tape is the obvious next thing to try.
+1. **MJX on sm_120 (RTX 5060).** `jit_rollout_cost` takes ~60 min of
+   XLA compilation and produces a gradient with cosine similarity
+   $-0.13$ vs FD. Reproducible; isolated to the newest Blackwell SASS.
+2. **Brax pipeline vs menagerie Panda.** `generalized.pipeline.init`
+   raises a `vmap` shape mismatch on the Panda MJCF. Chain models
+   compile fine — upstream Brax (deprecated) is unlikely to be fixed.
+3. **Differentiable but not in Python.** Genesis exposes gradients
+   only via a checkpoint-style `sim.sub_step_grad()` API that doesn't
+   compose with a pure-function `gradient_rollout_cost` contract.
+   TDS's pip wheel ships the plain-`double` instantiation only; CppAD
+   bindings exist in-tree but aren't wired into Python.
+4. **Newton gravity sign.** Newton stores gravity as a *signed* scalar
+   along `up_vector`; passing the positive vector norm (the obvious
+   thing) flipped gravity skyward. Caught by the cross-adapter
+   pendulum-agreement test.
+5. **Newton gradient correct on chain, broken on Panda.** Same
+   `warp.Tape` code path reproduces FD to 0.5% rel. error on the
+   3-DoF chain ($\epsilon = 10^{-2}$) but produces cosine = 0 on
+   Panda Exp1. Looks like tape-state contamination across the FD
+   reference's ~45 perturbations; per-perturbation fresh tape is
+   the obvious next thing to try.
 
 ---
 
@@ -207,12 +173,15 @@ Phase 3 added floating-base SE(3) support for Pinocchio (with tangent-space Jaco
 git clone https://github.com/shubhamsingh91/sim_diff
 cd sim_diff
 DOCKER_BUILDKIT=0 docker build -t simdiff-bench:dev -f docker/Dockerfile .
-./scripts/reproduce.sh                # writes results/phase1/{exp*.json,figures/*.png,SUMMARY.md}
+./scripts/reproduce.sh
 ```
 
-First run ~30 min (clones robot-description repos, builds JIT caches). Subsequent
-runs hit the persistent `.cache/` mount and warm JIT caches → ~5 min for the
-non-mjx adapters.
+First run is ~30 min (clones `robot_descriptions` repos, builds JIT
+caches). Subsequent runs hit warm caches → ~5 min for the non-MJX
+adapters; MJX on sm_120 stays at ~60 min because of the documented
+XLA-compile pathology. All numbers above are single-seed; multi-seed
+CI bars + a contact-rich locomotion task suite are the next
+milestone.
 
 To run a single adapter:
 
@@ -221,7 +190,3 @@ docker run --rm --gpus all -v "$PWD:/workspace" -w /workspace \
     simdiff-bench:dev \
     python scripts/run_phase1.py --output-dir results/phase1 --adapter pinocchio
 ```
-
-The full source tree, plan, and per-phase status are tracked in
-[the repository](https://github.com/shubhamsingh91/sim_diff) (private during
-review; tag `phase-3-sprint` marks the state behind the figures above).
