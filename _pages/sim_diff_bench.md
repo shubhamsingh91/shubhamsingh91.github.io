@@ -74,9 +74,11 @@ task suite (Phase 4+) is still ahead.
 </div>
 
 <div class="caption" style="text-align:center; font-size:90%; margin-top:0.5em;">
-  GIFs are rendered from MuJoCo MJCF via the offscreen renderer. Go2 and G1 are
-  shown in passive freefall — the contact-rich locomotion/sliding/impact
-  task suite is Phase 4+ scope.
+  GIFs are rendered from each MJCF via MuJoCo's offscreen renderer.
+  Robots are held at the menagerie "home"/"stand" keyframe with PD
+  control plus a small sinusoidal excitation, so the demos visualise the
+  pose the gradient/forward dynamics work against. A contact-rich
+  locomotion/sliding/impact task suite is Phase 4+ scope.
 </div>
 
 A parametric **chain robot** (planar N-link revolute, $N \in
