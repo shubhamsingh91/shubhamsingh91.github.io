@@ -75,10 +75,13 @@ task suite (Phase 4+) is still ahead.
 
 <div class="caption" style="text-align:center; font-size:90%; margin-top:0.5em;">
   GIFs are rendered from each MJCF via MuJoCo's offscreen renderer.
-  Robots are held at the menagerie "home"/"stand" keyframe with PD
-  control plus a small sinusoidal excitation, so the demos visualise the
-  pose the gradient/forward dynamics work against. A contact-rich
-  locomotion/sliding/impact task suite is Phase 4+ scope.
+  Each robot is driven open-loop around the menagerie "home"/"stand"
+  keyframe under PD control: Go2 walks a creep gait with one swing
+  foot at a time (visible foot lift-off + touch-down contacts), the
+  Allegro hand cycles grip/release on a resting object, Panda does
+  sine-shaped joint motions, and G1 holds standing with shoulder/elbow
+  motion. The full contact-rich locomotion/sliding/impact task suite
+  is Phase 7 scope.
 </div>
 
 A parametric **chain robot** (planar N-link revolute, $N \in
