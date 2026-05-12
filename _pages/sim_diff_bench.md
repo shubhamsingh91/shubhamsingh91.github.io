@@ -28,16 +28,26 @@ random torques.
 | pinocchio | 8.82 × 10⁻⁸ | 1.88 × 10⁻⁷    | **1.0000**  | ok |
 | drake     | 1.37 × 10⁻⁷ | 2.42 × 10⁻⁷    | **1.0000**  | ok |
 | jaxsim    | 7.53 × 10⁻⁸ | 9.72 × 10⁻⁸    | **1.0000**  | ok |
+| newton    | 1.6 × 10⁻¹  | 1.4 × 10⁻¹     | **0.9872**  | ok ✱ |
 | brax      | —           | —               | —           | failed (Panda MJCF upstream bug) |
-| mjx       | 1.00        | 1.00            | −0.13       | failed (sm_120 XLA compile pathology) |
-| newton    | 1.5 × 10³⁰  | 7.2 × 10²⁹     | 0.00        | failed (tape contamination on Panda; ok on chain) |
+| mjx       | 1.00        | 1.00            | −0.13       | failed (sm_120 XLA compile — CPU pin landed in Phase 7; cached result) |
 | genesis   | —           | —               | —           | gradient not exposed in Python |
 | tds       | —           | —               | —           | gradient bindings absent from the wheel |
 
-Three of eight adapters (Pinocchio analytical RBD, Drake `AutoDiffXd`,
-JaxSim `jax.grad`) agree with FD to one part in $10^7$. The remaining
-five fail in *different and informative* ways, summarised in the
+Four of eight adapters (Pinocchio analytical RBD, Drake `AutoDiffXd`,
+JaxSim `jax.grad`, Newton `warp.Tape`) deliver a gradient that points
+the right way to within float-precision noise on Panda.  The remaining
+four fail in *different and informative* ways, summarised in the
 findings section below.
+
+✱ Newton was originally `failed` with cosine_similarity = −0.13.  The
+root cause turned out to be float32 precision vs. the FD reference's
+default `eps = sqrt(eps_float64) ≈ 1.5 × 10⁻⁸` — below float32
+machine precision, so the central-difference numerator was noise.
+Phase 7 added `AdapterCapabilities.fd_eps_hint`; Newton declares
+`sqrt(eps_float32) ≈ 3.5 × 10⁻⁴`.  Cosine similarity went from −0.13
+(wrong direction) to 0.987 (right direction, ~14–16% residual relative
+error is the cost of float32 forward dynamics).
 
 <div style="display:flex; justify-content:center;">
   <img src="/assets/img/sim_diff_bench/exp1_gradient_correctness.png"
