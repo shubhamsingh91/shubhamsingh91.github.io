@@ -30,7 +30,7 @@ random torques.
 | jaxsim    | 7.53 × 10⁻⁸ | 9.72 × 10⁻⁸    | **1.0000**  | ok |
 | newton    | 1.6 × 10⁻¹  | 1.4 × 10⁻¹     | **0.9872**  | ok ✱ |
 | brax      | —           | —               | —           | failed (Panda MJCF upstream bug) |
-| mjx       | 1.00        | 1.00            | −0.13       | failed (sm_120 XLA compile — CPU pin landed in Phase 7; cached result) |
+| mjx       | 1.00        | 1.00            | −0.13       | failed (sm_120 XLA compile pathology; CPU-pin fix landed afterwards, cached result shown here) |
 | genesis   | —           | —               | —           | gradient not exposed in Python |
 | tds       | —           | —               | —           | gradient bindings absent from the wheel |
 
@@ -44,7 +44,7 @@ findings section below.
 root cause turned out to be float32 precision vs. the FD reference's
 default `eps = sqrt(eps_float64) ≈ 1.5 × 10⁻⁸` — below float32
 machine precision, so the central-difference numerator was noise.
-Phase 7 added `AdapterCapabilities.fd_eps_hint`; Newton declares
+Added `AdapterCapabilities.fd_eps_hint`; Newton declares
 `sqrt(eps_float32) ≈ 3.5 × 10⁻⁴`.  Cosine similarity went from −0.13
 (wrong direction) to 0.987 (right direction, ~14–16% residual relative
 error is the cost of float32 forward dynamics).
@@ -60,9 +60,9 @@ error is the cost of float32 forward dynamics).
 
 Four robots are loadable through the adapter contract. Panda and the
 parametric chain are exercised by every experiment; Go2, G1, and
-Allegro landed in Phase 3 and are wired through forward dynamics +
-floating-base SE(3) integration, but the locomotion / manipulation
-task suite (Phase 4+) is still ahead.
+Allegro are wired through forward dynamics + floating-base SE(3)
+integration; locomotion / manipulation task suites land alongside
+the contact-rich SHAC results below.
 
 <div style="display:flex; flex-wrap:wrap; gap:1em; justify-content:center;">
   <figure style="flex:1; min-width:240px; max-width:24%; text-align:center;">
@@ -71,15 +71,15 @@ task suite (Phase 4+) is still ahead.
   </figure>
   <figure style="flex:1; min-width:240px; max-width:24%; text-align:center;">
     <img src="/assets/img/sim_diff_bench/demo_go2.gif" alt="Unitree Go2" style="width:100%;"/>
-    <figcaption><b>Unitree Go2</b><br/>12-DoF quadruped + 6-DoF floating base. Phase 3.</figcaption>
+    <figcaption><b>Unitree Go2</b><br/>12-DoF quadruped + 6-DoF floating base.</figcaption>
   </figure>
   <figure style="flex:1; min-width:240px; max-width:24%; text-align:center;">
     <img src="/assets/img/sim_diff_bench/demo_g1.gif" alt="Unitree G1" style="width:100%;"/>
-    <figcaption><b>Unitree G1</b><br/>29-DoF humanoid + 6-DoF floating base. Phase 3.</figcaption>
+    <figcaption><b>Unitree G1</b><br/>29-DoF humanoid + 6-DoF floating base.</figcaption>
   </figure>
   <figure style="flex:1; min-width:240px; max-width:24%; text-align:center;">
     <img src="/assets/img/sim_diff_bench/demo_allegro.gif" alt="Wonik Allegro" style="width:100%;"/>
-    <figcaption><b>Wonik Allegro</b><br/>16-DoF dexterous hand, fixed base. Phase 3.</figcaption>
+    <figcaption><b>Wonik Allegro</b><br/>16-DoF dexterous hand, fixed base.</figcaption>
   </figure>
 </div>
 
@@ -91,7 +91,7 @@ task suite (Phase 4+) is still ahead.
   Allegro hand cycles grip/release on a resting object, Panda does
   sine-shaped joint motions, and G1 holds standing with shoulder/elbow
   motion. The full contact-rich locomotion/sliding/impact task suite
-  is Phase 7 scope.
+  lands alongside the contact-rich SHAC results below.
 </div>
 
 A parametric **chain robot** (planar N-link revolute, $N \in
@@ -173,12 +173,82 @@ of abstraction.
    along `up_vector`; passing the positive vector norm (the obvious
    thing) flipped gravity skyward. Caught by the cross-adapter
    pendulum-agreement test.
-5. **Newton gradient correct on chain, broken on Panda.** Same
-   `warp.Tape` code path reproduces FD to 0.5% rel. error on the
-   3-DoF chain ($\epsilon = 10^{-2}$) but produces cosine = 0 on
-   Panda Exp1. Looks like tape-state contamination across the FD
-   reference's ~45 perturbations; per-perturbation fresh tape is
-   the obvious next thing to try.
+5. **Newton on Panda — float32 FD-step calibration.** Originally
+   reported as "tape-state contamination": same `warp.Tape` code
+   path reproduces FD to 0.5% rel. error on the 3-DoF chain
+   ($\epsilon = 10^{-2}$) but produced cosine = 0 on Panda Exp1.
+   Root cause was Newton's float32 forward dynamics against the
+   FD reference's default $h = \sqrt{\epsilon_{f64}} \approx 1.5
+   \times 10^{-8}$ — below float32 machine precision, so the
+   central-difference numerator collapsed to noise. Added
+   `AdapterCapabilities.fd_eps_hint`; Newton declares
+   $\sqrt{\epsilon_{f32}} \approx 3.5 \times 10^{-4}$. Panda
+   cosine went from $-0.13$ to $0.987$.
+
+---
+
+## Floating-base + contact-rich SHAC
+
+Two new learning curves close the floating-base half of the
+benchmark's headline learning result.
+
+### Pinocchio Go2 floating-base SHAC (no contact)
+
+<div style="display:flex; justify-content:center;">
+  <img src="/assets/img/sim_diff_bench/exp4_go2_fb_shac.png"
+       alt="Go2 floating-base SHAC (Pinocchio, no contact)"
+       style="max-width:66%;"/>
+</div>
+
+Pinocchio's analytical Featherstone Jacobian composes through a
+$(2n_v)\times(2n_v)$ tangent-space `QuadraticCost` on the floating
+root joint. The discrete-adjoint SHAC trainer was extended with an
+`obs_fn` parameter and a `make_tangent_obs_fn(pin_model, ref_q)`
+helper that produces the `[pin.difference(ref, q), v]` observation
+of size $2n_v$, lining up with `jacobian_step`'s output shape. 120
+SHAC iterations drop the episodic cost from $3.8\times10^2$ to
+$4.2\times10^{-3}$ (a $9\times10^4\times$ reduction; mean iteration
+$\approx 11$ ms) on the Go2 joint-stabilisation task. The
+unactuated floating root's fall under gravity does not contaminate
+the gradient signal because the cost is zero on the base block —
+the framework demonstration that the tangent-space SHAC loop works
+on a 19-DoF, 18-tangent-DoF robot.
+
+### MJX Go2 with floor contact — differentiable contact gradient
+
+<div style="display:flex; justify-content:center;">
+  <img src="/assets/img/sim_diff_bench/exp4_go2_contact_shac.png"
+       alt="Go2 stand-on-feet SHAC (MJX, differentiable contact)"
+       style="max-width:66%;"/>
+</div>
+
+The headline contact-rich result. Loading the menagerie
+`scene_mjx.xml` (Go2 + floor, condim=1, pyramidal cone) through the
+MJX adapter — after a cylinder→capsule preprocessor that clears
+MJX's collision-dispatcher omission for cylinder/box pairs — gives
+a working differentiable-contact step. SHAC then runs end-to-end
+on the Go2 "stand on feet under gravity" task (home-keyframe
+initialisation, $T=30$, $\Delta t=2$ ms, 18-DoF `qfrc_applied`
+actuation), with cost on joint deviation from home + joint
+velocity + body-quaternion deviation from upright. 120 SHAC
+iterations drop the cost from $2.1\times10^3$ to $\sim 42$ —
+a $50\times$ reduction in $\sim 2.5$ minutes of CPU-pinned MJX
+training. The gradient is forward-mode `jacfwd` through MJX's
+full pipeline including contact resolution, so this is a
+genuine contact-gradient training loop.
+
+### What's still open
+
+- Multi-seed (≥5) bootstrap CIs on the contact-rich curve.
+- Cross-adapter version of the same task through
+  drake / jaxsim / brax / newton.
+- `go2_forward_trot` periodic gait (needs `ctrl`-mapped MJX
+  actuators rather than the current `qfrc_applied` path).
+- Brax row in Exp1 — root cause traced to Brax's
+  `kinematics.forward` assuming one joint per non-world body
+  (doesn't tolerate the menagerie's fixed-link-to-world pattern).
+  Fix would require forking deprecated Brax; documented as a
+  finding instead.
 
 ---
 
