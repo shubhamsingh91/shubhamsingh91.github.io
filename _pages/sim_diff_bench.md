@@ -161,7 +161,7 @@ of abstraction.
 1. **MJX on the menagerie Panda.** `jit_rollout_cost` takes ~60 min
    of XLA compilation on the RTX 5060 (Blackwell sm_120) and
    produces a gradient with cosine similarity $-0.13$ vs FD.  The
-   CPU pin (Phase 7) clears the GPU-compile pathology for the
+   CPU pin clears the GPU-compile pathology for the
    chain fixtures and for the Go2 contact scene used below, where
    compile finishes in seconds-to-minutes and the gradient is
    correct. On the Panda MJCF the CPU compile itself runs out of
