@@ -158,12 +158,28 @@ of abstraction.
 
 ## Findings
 
-1. **MJX on sm_120 (RTX 5060).** `jit_rollout_cost` takes ~60 min of
-   XLA compilation and produces a gradient with cosine similarity
-   $-0.13$ vs FD. Reproducible; isolated to the newest Blackwell SASS.
+1. **MJX on the menagerie Panda.** `jit_rollout_cost` takes ~60 min
+   of XLA compilation on the RTX 5060 (Blackwell sm_120) and
+   produces a gradient with cosine similarity $-0.13$ vs FD.  The
+   CPU pin (Phase 7) clears the GPU-compile pathology for the
+   chain fixtures and for the Go2 contact scene used below, where
+   compile finishes in seconds-to-minutes and the gradient is
+   correct. On the Panda MJCF the CPU compile itself runs out of
+   memory on a 16-GB host (container killed with exit 137) before
+   finishing, so the original cosine $-0.13$ stays in the headline
+   table as a permanent *failed* row. The wrongness when the
+   compile does finish is a separate failure mode from the compile
+   time, likely in MJX's qfrc-applied path on the Panda meshes.
 2. **Brax pipeline vs menagerie Panda.** `generalized.pipeline.init`
-   raises a `vmap` shape mismatch on the Panda MJCF. Chain models
-   compile fine — upstream Brax (deprecated) is unlikely to be fixed.
+   raises a `vmap` shape mismatch on the Panda MJCF: 9 joints vs 11
+   non-world bodies. The cause is structural: brax's
+   `kinematics.forward` assumes one joint per non-world body, and
+   the menagerie Panda MJCF has `link0` fixed-attached to world
+   (no joint) plus the hand/finger sub-tree adding two more fixed
+   links. Pruning the hand+fingers gets the ratio to 7 vs 8 and
+   still fails by the same mechanism. Chain fixtures, where every
+   non-world body has its own joint, work fine. Upstream Brax is
+   deprecated.
 3. **Differentiable but not in Python.** Genesis exposes gradients
    only via a checkpoint-style `sim.sub_step_grad()` API that doesn't
    compose with a pure-function `gradient_rollout_cost` contract.
