@@ -60,7 +60,46 @@ nav_order: 2
 
 ## Research and technical projects
 
-## 1. Operational Space Control for a 7-DOF Franka Panda Arm (2026)
+## 1. Second-Order DDP via the modRNEA contraction trick (2026)
+
+
+<div style="display:flex">
+     <div style="flex:1;padding-right:5px;">
+         <img src="/assets/img/soddp_iiwa.gif" style="height:7cm;" class="center">
+             <figcaption> 7-DoF iiwa reach solved by second-order DDP (end-effector path &rarr; target) </figcaption>
+    </div>
+     <div style="flex:1;padding-left:5px;">
+        <img src="/assets/img/soddp_runtime.png" style="height:7cm;" class="center">
+           <figcaption> Wall-clock solve time vs precision: 1.6&ndash;1.85&times; faster than FDDP </figcaption>
+     </div>
+</div>
+
+<br>
+
+<div style="display:flex">
+     <div style="flex:1;">
+        <img src="/assets/img/soddp_localconv.png" style="height:6.5cm;" class="center">
+           <figcaption> SO-DDP converges quadratically (cost cliffs to machine precision) vs FDDP's linear crawl </figcaption>
+     </div>
+</div>
+
+<br>
+
+<div style="display:inline-block;vertical-align: middle;">
+
+Full second-order Differential Dynamic Programming needs the dynamics Hessian contracted with the value gradient &mdash; historically avoided because forming the forward-dynamics second-order term is an O(n&sup3;) tensor at every knot. Using the modified-RNEA second-order algorithm, this costate-contracted directional derivative is computed in O(n&sup2;) with no 3D tensor. I ported the modRNEA derivatives onto Pinocchio 3.2 (finite-difference verified to ~1e-6) and built a second-order solver (SolverSODDP) in Crocoddyl that injects the contracted Hessian directly into the DDP backward pass, with quasi-Newton amortization. On a 7-DoF KUKA iiwa reach, SO-DDP converges quadratically to the same optimum as first-order FDDP &mdash; 22&ndash;25 vs 57 iterations to a 1e-12 stopping tolerance &mdash; and runs 1.6&ndash;1.85&times; faster in wall-clock, with the margin growing as the problem is solved more tightly. Part of ongoing work with Patrick Wensing.
+ <br>
+   <br>
+  Skills used: C++, Pinocchio, Crocoddyl, Spatial Vector Algebra, Optimization
+</div>
+
+ [Code](https://github.com/shubhamsingh91/pinocchio)
+
+<br>
+<br>
+
+
+## 2. Operational Space Control for a 7-DOF Franka Panda Arm (2026)
 
 
 <div style="display:flex">
@@ -85,7 +124,7 @@ A from-scratch implementation of Khatib's Operational Space Control (OSC) formul
 <br>
 <br>
 
-## 2. Multi-Shooting DDP optimization for a for a 7-DoF Quadruped using Quasi-Newton (2020-2023)
+## 3. Multi-Shooting DDP optimization for a for a 7-DoF Quadruped using Quasi-Newton (2020-2023)
 
 
 <div style="display:flex">
@@ -115,7 +154,7 @@ convergence compared to the full DDP method.
 <br>
 <br>
 
-## 3. Analytical Partial Derivatives of Rigid Body Systems (2020-2023)
+## 4. Analytical Partial Derivatives of Rigid Body Systems (2020-2023)
 
 
 <div style="display:flex">
@@ -143,7 +182,7 @@ convergence compared to the full DDP method.
 <br>
 <br>
 
-## 4. Differential Dynamic Programming for Rigid Body Systems (2018-2023)
+## 5. Differential Dynamic Programming for Rigid Body Systems (2018-2023)
 
 
 <div style="display:flex">
@@ -174,7 +213,7 @@ convergence compared to the full DDP method.
 <br>
 <br>
 
-## 5. TOWR for Urban Environments (Jan-May 2021)
+## 6. TOWR for Urban Environments (Jan-May 2021)
 
 
 <div style="display:flex">
@@ -198,7 +237,7 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 <br>
 <br>
 
-## 6. Trust Region Method Based on Cholesky Decomposition (Aug-Dec 2019)
+## 7. Trust Region Method Based on Cholesky Decomposition (Aug-Dec 2019)
 
 
 Second-order optimization methods often use the Levenberg-Marquardt method to decide the step length. To improve the step length selection criteria, in this project, a trust region method based on Cholesky Decomposition used for second-order optimization algorithms is implemented. In the end, suggestions on the method are mentioned to use it for high degree-of-freedom systems like legged robots. This method is key in accelerating the use of the full second-order method for optimization-based robotics.
@@ -211,7 +250,7 @@ Second-order optimization methods often use the Levenberg-Marquardt method to de
 <br>
 <br>
 
-## 7. Methods of Orbit Determination (Jan-May 2018)
+## 8. Methods of Orbit Determination (Jan-May 2018)
 
 
 The problem of determining the future state of a satellite based on a set of observations is formulated and analyzed. Under the effect of various forces, the orbit of the satellite is estimated for 6 days using an Extended Kalman Filter formulation and is propagated for another day to report the state information in the ECI coordinate frame at the ∆V1 epoch. A high fidelity gravity model (20x20 non-spherical model) along with lunar, solar perturbations, solar radiation pressure, etc. are included for propagating the orbit and develop the analytical expressions required in the estimation process.
@@ -225,7 +264,7 @@ The problem of determining the future state of a satellite based on a set of obs
 
 
 
-## 8. Collaborative Air Autonomy- System of Systems (Aug-Dec 2015)
+## 9. Collaborative Air Autonomy- System of Systems (Aug-Dec 2015)
 
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
