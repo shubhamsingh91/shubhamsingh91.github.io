@@ -60,26 +60,17 @@ nav_order: 2
 
 ## Research and technical projects
 
-## 1. Second-Order DDP via the modRNEA contraction trick (2026)
+## 1. Second-Order DDP via the modRNEA contraction (2026)
 
 
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
-         <img src="/assets/img/soddp_iiwa.gif" style="height:7cm;" class="center">
-             <figcaption> 7-DoF iiwa reach solved by second-order DDP (end-effector path &rarr; target) </figcaption>
+         <img src="/assets/img/soddp_panda.gif" style="height:7cm;" class="center">
+             <figcaption> SO-DDP solving a reach on the 7-DoF Franka Panda (rendered in PyBullet) </figcaption>
     </div>
      <div style="flex:1;padding-left:5px;">
-        <img src="/assets/img/soddp_runtime.png" style="height:7cm;" class="center">
-           <figcaption> Wall-clock solve time vs precision: 1.6&ndash;1.85&times; faster than FDDP </figcaption>
-     </div>
-</div>
-
-<br>
-
-<div style="display:flex">
-     <div style="flex:1;">
-        <img src="/assets/img/soddp_localconv.png" style="height:6.5cm;" class="center">
-           <figcaption> SO-DDP converges quadratically (cost cliffs to machine precision) vs FDDP's linear crawl </figcaption>
+        <img src="/assets/img/soddp_conv.png" style="height:7cm;" class="center">
+           <figcaption> Local convergence: SO-DDP is super-linear / quadratic, while first-order FDDP is linear (a straight line on the semilog axis) </figcaption>
      </div>
 </div>
 
@@ -87,10 +78,25 @@ nav_order: 2
 
 <div style="display:inline-block;vertical-align: middle;">
 
-Full second-order Differential Dynamic Programming needs the dynamics Hessian contracted with the value gradient &mdash; historically avoided because forming the forward-dynamics second-order term is an O(n&sup3;) tensor at every knot. Using the modified-RNEA second-order algorithm, this costate-contracted directional derivative is computed in O(n&sup2;) with no 3D tensor. I ported the modRNEA derivatives onto Pinocchio 3.2 (finite-difference verified to ~1e-6) and built a second-order solver (SolverSODDP) in Crocoddyl that injects the contracted Hessian directly into the DDP backward pass, with quasi-Newton amortization. On a 7-DoF KUKA iiwa reach, SO-DDP converges quadratically to the same optimum as first-order FDDP &mdash; 22&ndash;25 vs 57 iterations to a 1e-12 stopping tolerance &mdash; and runs 1.6&ndash;1.85&times; faster in wall-clock, with the margin growing as the problem is solved more tightly. Part of ongoing work with Patrick Wensing.
+<b>The problem.</b> Trajectory optimization is posed as a discrete optimal control problem (OCP): over a horizon of T steps, pick the joint torques that minimize a sum of running costs plus a terminal cost, subject to the robot's nonlinear forward dynamics. For a reaching task the running cost regularizes the state and the controls, while the terminal cost drives the end-effector to a target. Differential Dynamic Programming (DDP) solves this by alternating a backward Riccati-like sweep, which builds a local feedback policy, with a forward rollout.
+<br><br>
+<b>First vs. second order.</b> The backward sweep needs the value-function Hessian, which contains the second derivative of the dynamics, F<sub>xx</sub>, contracted with the value gradient. The standard solvers (iLQR / FDDP) <i>drop</i> this term &mdash; the Gauss&ndash;Newton approximation &mdash; so they are first-order and converge linearly. Keeping it gives full second-order DDP, which converges <i>quadratically</i> near the optimum; but forming F<sub>xx</sub> is an O(n&sup3;) third-order tensor at every knot, long considered too expensive.
+<br><br>
+<b>The modRNEA contraction.</b> DDP only needs the Hessian <i>contracted with the value gradient</i> (a costate), not the full tensor. The modified-RNEA second-order algorithm computes this costate-contracted directional derivative in O(n&sup2;), with no 3D tensor. I ported it onto Pinocchio 3.2 (finite-difference verified to ~1e-6) and built a second-order solver (SolverSODDP) in Crocoddyl that injects the contracted Hessian blocks directly into the backward pass.
+<br><br>
+<b>Quasi-Newton amortization.</b> Even at O(n&sup2;), recomputing the second-order term every iteration costs roughly twice a first-order iteration. The quasi-Newton scheme (Singh et al., Humanoids 2023) recomputes it only every <i>p</i> iterations (here p = 5) and reuses the cached blocks in between, cutting the per-iteration overhead to about +25% while preserving the convergence benefit.
+<br><br>
+<b>Results.</b> Benchmarked on a 7-DoF iiwa reach (the same solver runs on the Franka Panda shown above). SO-DDP reaches the <i>same</i> optimum as FDDP but converges quadratically: to a 1e-12 stopping tolerance, FDDP needs 57 iterations while SO-DDP needs 22 (full) or 25 (quasi-Newton), running 1.6&ndash;1.85&times; faster in wall-clock &mdash; with the advantage widening as the problem is solved more tightly. The second-order benefit is largest on ill-conditioned problems, where the Gauss&ndash;Newton model is poorest.
  <br>
    <br>
-  Skills used: C++, Pinocchio, Crocoddyl, Spatial Vector Algebra, Optimization
+  Skills used: C++, Pinocchio, Crocoddyl, Differential Dynamic Programming, Spatial Vector Algebra
+</div>
+
+<div style="display:flex">
+     <div style="flex:1;">
+        <img src="/assets/img/soddp_iters_runtime.png" style="height:6.5cm;" class="center">
+           <figcaption> Iterations and wall-clock vs. stopping tolerance (7-DoF iiwa): SO-DDP and its quasi-Newton variant both beat first-order FDDP, and the gap widens at tighter tolerances </figcaption>
+     </div>
 </div>
 
  [Code](https://github.com/shubhamsingh91/pinocchio)
