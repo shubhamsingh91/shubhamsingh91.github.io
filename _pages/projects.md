@@ -66,7 +66,7 @@ nav_order: 2
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
          <img src="/assets/img/rbdso_runtime.png" style="height:7.5cm;" class="center">
-             <figcaption> Per-call cost on the B2+Z1 whole body (n<sub>v</sub>=25): the analytical Pinocchio binding matches or beats compiled CasADi on the <i>same</i> quantity — 1.9× (first-order) and 1.2× (second-order), with no <code>ca.Callback</code> </figcaption>
+             <figcaption> Per-call derivative cost (B2+Z1, n<sub>v</sub>=25), same quantity: analytical is 1.9× / 1.2× faster than compiled CasADi </figcaption>
     </div>
 </div>
 
@@ -74,9 +74,7 @@ nav_order: 2
 
 <div style="display:inline-block;vertical-align: middle;">
 
-A whole-body MPC tick is dominated by dynamics derivatives: on a Unitree B2+Z1 (quadruped + 6-DoF arm; n<sub>q</sub>=26 / n<sub>v</sub>=25) the 14-node Fatrop OCP solves in ≈59 ms, ≈80% of it spent on derivatives. I compared the two ways to get them — CasADi auto-diff + code generation vs the closed-form analytical RBD algorithm — using Molnar et&nbsp;al.'s whole-body MPC — the <i>same model, RNEA formulation, and code</i> — swapping only the derivative backend, on the <i>same quantity</i> (the full second-order tensors, validated to 1e−15) and at the same Python-binding level (no <code>ca.Callback</code>).
-<br><br>
-The analytical backend is faster per call <b>and</b> far lighter to build: it generates no C, compiles nothing, and needs no compiler memory, while CasADi needs 8.83&nbsp;MB of generated C and 1.40&nbsp;GB of peak RAM for a single second-order function (and OOMs at 32&nbsp;GB for heavier models). The method is our analytical second-order RBD derivatives algorithm (paper below); wiring it into the live solver — a compiled, non-callback integration — is the remaining step.
+Dynamics derivatives are ≈80% of a whole-body MPC tick (Molnar et&nbsp;al.'s B2+Z1, ≈59 ms). I benchmarked analytical RBD derivatives against CasADi (auto-diff + codegen) on the <i>same code, same quantity</i>, at the Python-binding level (no <code>ca.Callback</code>): analytical is faster per call <b>and</b> eliminates the codegen/memory wall (8.83&nbsp;MB C + 1.40&nbsp;GB build RAM → 0). Wiring it into the live solver is the next step.
  <br>
    <br>
   Skills used: C++, Python, Pinocchio, CasADi, Whole-Body MPC, Rigid-Body Dynamics, Spatial Vector Algebra
@@ -85,21 +83,13 @@ The analytical backend is faster per call <b>and</b> far lighter to build: it ge
 <div style="display:flex">
      <div style="flex:1;">
         <img src="/assets/img/rbdso_wall.png" style="height:5.5cm;" class="center">
-           <figcaption> Offline build cost of the second-order derivatives: analytical pays zero, while CasADi needs 8.83 MB of generated C, ≈63 s of compilation, and 1.40 GB of peak RAM (OOM at 32 GB for heavier models) </figcaption>
+           <figcaption> Offline build cost (second-order): analytical 0, vs CasADi 8.83 MB C / 1.40 GB RAM (OOM at 32 GB heavier) </figcaption>
      </div>
 </div>
 
-Measured, analytical vs CasADi (B2+Z1, n<sub>v</sub>=25), same quantity:
-
-| quantity | CasADi | analytical |
-|:--|:--:|:--:|
-| 2nd-order derivative, per call | 150 µs | **129 µs** |
-| 1st-order derivative, per call | 49 µs | **26 µs** |
-| offline build, 2nd-order | 8.83 MB C, 1.4 GB RAM | **0** |
-
 <div style="display:flex; align-items:center; gap:14px; margin-top:6px;">
   <a href="/assets/pdf/rbdso_wbmpc_benchmark.pdf"><img src="/assets/img/rbdso_paper.png" style="height:6.5cm; border:1px solid #ccc;"></a>
-  <figcaption> 2-page technical note (PDF): the full methodology, the measurement traps avoided, results, and references. </figcaption>
+  <figcaption> 2-page technical note (PDF). </figcaption>
 </div>
 
  **MPC** (Molnar et&nbsp;al., RA-L): [paper](https://arxiv.org/abs/2511.19709) · [code](https://github.com/lukasmolnar/wb-mpc-locoman)  —  **Analytical derivatives** (Singh et&nbsp;al.): [paper](https://arxiv.org/abs/2307.12606) · [pinocchio fork](https://github.com/shubhamsingh91/pinocchio)  —  [Technical note (PDF)](/assets/pdf/rbdso_wbmpc_benchmark.pdf)
