@@ -60,7 +60,43 @@ nav_order: 2
 
 ## Research and technical projects
 
-## 1. Second-Order DDP via the modRNEA contraction (2026)
+## 1. Analytical Second-Order Derivatives vs. CasADi for Whole-Body MPC (2026)
+
+
+<div style="display:flex">
+     <div style="flex:1;padding-right:5px;">
+         <img src="/assets/img/rbdso_runtime.png" style="height:7.5cm;" class="center">
+             <figcaption> Per-call cost on the B2+Z1 whole body (n<sub>v</sub>=25): the analytical Pinocchio binding matches or beats compiled CasADi on the <i>same</i> quantity — 1.9× (first-order) and 1.2× (second-order), with no <code>ca.Callback</code> </figcaption>
+    </div>
+</div>
+
+<br>
+
+<div style="display:inline-block;vertical-align: middle;">
+
+<b>The problem.</b> A whole-body MPC tick is dominated by dynamics derivatives. On a Unitree B2+Z1 (quadruped plus a 6-DoF arm; free-flyer, n<sub>q</sub>=26 / n<sub>v</sub>=25) the 14-node Fatrop OCP solves in ≈59 ms, and ≈80% of that is derivative evaluation — the Lagrangian Hessian (second order) alone is ≈45%. Those derivatives can come from symbolic auto-differentiation with code generation (CasADi) or from closed-form analytical rigid-body-dynamics algorithms. Which is actually faster, the way the controller calls them?
+<br><br>
+<b>A fair comparison.</b> Such comparisons are easy to rig by accident. I benchmarked the full second-order inverse-dynamics derivatives (the four ∂²τ tensors) <i>apples-to-apples</i>: at the same level — both reached through one thin Python crossing, a Pinocchio binding vs CasADi's compiled <code>ca.external</code> — in the controller's own environment, and on the <i>same quantity</i> (full tensors vs full tensors, validated to 1e−15 on the joint blocks before timing). The usual traps are excluded: no <code>ca.Callback</code> (Python inside the solver loop adds ≈420 µs/call and falsely reverses the result), the CasADi side compiled rather than interpreted, and matched quantities rather than full-tensor-vs-contracted.
+<br><br>
+<b>Results.</b> The analytical algorithm matches or beats compiled CasADi on the identical object — 1.9× (first order) and 1.2× (second order) at n<sub>v</sub>=25, the margin widening with model size. The decisive, robust win is offline: the analytical route generates no C, compiles nothing, and uses no compiler memory, whereas CasADi needs 8.83 MB of generated C and 1.40 GB of peak RAM to build a single second-order function — and runs out of memory at 32 GB for heavier models. Realizing the online speedup inside the solver needs a compiled, non-callback integration; the Python-callback shortcut is a trap.
+ <br>
+   <br>
+  Skills used: C++, Python, Pinocchio, CasADi, Whole-Body MPC, Rigid-Body Dynamics, Spatial Vector Algebra
+</div>
+
+<div style="display:flex">
+     <div style="flex:1;">
+        <img src="/assets/img/rbdso_wall.png" style="height:5.5cm;" class="center">
+           <figcaption> Offline build cost of the second-order derivatives: analytical pays zero, while CasADi needs 8.83 MB of generated C, ≈63 s of compilation, and 1.40 GB of peak RAM (OOM at 32 GB for heavier models) </figcaption>
+     </div>
+</div>
+
+ [Paper](/assets/pdf/rbdso_wbmpc_benchmark.pdf) , [Code](https://github.com/shubhamsingh91/pinocchio)
+
+<br>
+<br>
+
+## 2. Second-Order DDP via the modRNEA contraction (2026)
 
 
 <div style="display:flex">
@@ -105,7 +141,7 @@ nav_order: 2
 <br>
 
 
-## 2. Operational Space Control for a 7-DOF Franka Panda Arm (2026)
+## 3. Operational Space Control for a 7-DOF Franka Panda Arm (2026)
 
 
 <div style="display:flex">
@@ -130,7 +166,7 @@ A from-scratch implementation of Khatib's Operational Space Control (OSC) formul
 <br>
 <br>
 
-## 3. Multi-Shooting DDP optimization for a for a 7-DoF Quadruped using Quasi-Newton (2020-2023)
+## 4. Multi-Shooting DDP optimization for a for a 7-DoF Quadruped using Quasi-Newton (2020-2023)
 
 
 <div style="display:flex">
@@ -160,7 +196,7 @@ convergence compared to the full DDP method.
 <br>
 <br>
 
-## 4. Analytical Partial Derivatives of Rigid Body Systems (2020-2023)
+## 5. Analytical Partial Derivatives of Rigid Body Systems (2020-2023)
 
 
 <div style="display:flex">
@@ -188,7 +224,7 @@ convergence compared to the full DDP method.
 <br>
 <br>
 
-## 5. Differential Dynamic Programming for Rigid Body Systems (2018-2023)
+## 6. Differential Dynamic Programming for Rigid Body Systems (2018-2023)
 
 
 <div style="display:flex">
@@ -219,7 +255,7 @@ convergence compared to the full DDP method.
 <br>
 <br>
 
-## 6. TOWR for Urban Environments (Jan-May 2021)
+## 7. TOWR for Urban Environments (Jan-May 2021)
 
 
 <div style="display:flex">
@@ -243,7 +279,7 @@ This project is aimed at simulating the behavior of quadrupeds to move in urban 
 <br>
 <br>
 
-## 7. Trust Region Method Based on Cholesky Decomposition (Aug-Dec 2019)
+## 8. Trust Region Method Based on Cholesky Decomposition (Aug-Dec 2019)
 
 
 Second-order optimization methods often use the Levenberg-Marquardt method to decide the step length. To improve the step length selection criteria, in this project, a trust region method based on Cholesky Decomposition used for second-order optimization algorithms is implemented. In the end, suggestions on the method are mentioned to use it for high degree-of-freedom systems like legged robots. This method is key in accelerating the use of the full second-order method for optimization-based robotics.
@@ -256,7 +292,7 @@ Second-order optimization methods often use the Levenberg-Marquardt method to de
 <br>
 <br>
 
-## 8. Methods of Orbit Determination (Jan-May 2018)
+## 9. Methods of Orbit Determination (Jan-May 2018)
 
 
 The problem of determining the future state of a satellite based on a set of observations is formulated and analyzed. Under the effect of various forces, the orbit of the satellite is estimated for 6 days using an Extended Kalman Filter formulation and is propagated for another day to report the state information in the ECI coordinate frame at the ∆V1 epoch. A high fidelity gravity model (20x20 non-spherical model) along with lunar, solar perturbations, solar radiation pressure, etc. are included for propagating the orbit and develop the analytical expressions required in the estimation process.
@@ -270,7 +306,7 @@ The problem of determining the future state of a satellite based on a set of obs
 
 
 
-## 9. Collaborative Air Autonomy- System of Systems (Aug-Dec 2015)
+## 10. Collaborative Air Autonomy- System of Systems (Aug-Dec 2015)
 
 <div style="display:flex">
      <div style="flex:1;padding-right:5px;">
