@@ -74,11 +74,9 @@ nav_order: 2
 
 <div style="display:inline-block;vertical-align: middle;">
 
-<b>The problem.</b> A whole-body MPC tick is dominated by dynamics derivatives. On a Unitree B2+Z1 (quadruped plus a 6-DoF arm; free-flyer, n<sub>q</sub>=26 / n<sub>v</sub>=25) the 14-node Fatrop OCP solves in ≈59 ms, and ≈80% of that is derivative evaluation — the Lagrangian Hessian (second order) alone is ≈45%. Those derivatives can come from symbolic auto-differentiation with code generation (CasADi) or from closed-form analytical rigid-body-dynamics algorithms. Which is actually faster, the way the controller calls them?
+A whole-body MPC tick is dominated by dynamics derivatives: on a Unitree B2+Z1 (quadruped + 6-DoF arm; n<sub>q</sub>=26 / n<sub>v</sub>=25) the 14-node Fatrop OCP solves in ≈59 ms, ≈80% of it spent on derivatives. I compared the two ways to get them — CasADi auto-diff + code generation vs the closed-form analytical RBD algorithm — using the controller's own model and RNEA formulation (<i>the same code</i>), swapping only the derivative backend, on the <i>same quantity</i> (the full second-order tensors, validated to 1e−15) and at the same Python-binding level (no <code>ca.Callback</code>).
 <br><br>
-<b>A fair comparison.</b> Such comparisons are easy to rig by accident. I benchmarked the full second-order inverse-dynamics derivatives (the four ∂²τ tensors) <i>apples-to-apples</i>: at the same level — both reached through one thin Python crossing, a Pinocchio binding vs CasADi's compiled <code>ca.external</code> — in the controller's own environment, and on the <i>same quantity</i> (full tensors vs full tensors, validated to 1e−15 on the joint blocks before timing). The usual traps are excluded: no <code>ca.Callback</code> (Python inside the solver loop adds ≈420 µs/call and falsely reverses the result), the CasADi side compiled rather than interpreted, and matched quantities rather than full-tensor-vs-contracted.
-<br><br>
-<b>Results.</b> The analytical algorithm matches or beats compiled CasADi on the identical object — 1.9× (first order) and 1.2× (second order) at n<sub>v</sub>=25, the margin widening with model size. The decisive, robust win is offline: the analytical route generates no C, compiles nothing, and uses no compiler memory, whereas CasADi needs 8.83 MB of generated C and 1.40 GB of peak RAM to build a single second-order function — and runs out of memory at 32 GB for heavier models. Realizing the online speedup inside the solver needs a compiled, non-callback integration; the Python-callback shortcut is a trap.
+The analytical backend is faster per call <b>and</b> far lighter to build: it generates no C, compiles nothing, and needs no compiler memory, while CasADi needs 8.83&nbsp;MB of generated C and 1.40&nbsp;GB of peak RAM for a single second-order function (and OOMs at 32&nbsp;GB for heavier models). The method is our analytical second-order RBD derivatives algorithm (paper below); wiring it into the live solver — a compiled, non-callback integration — is the remaining step.
  <br>
    <br>
   Skills used: C++, Python, Pinocchio, CasADi, Whole-Body MPC, Rigid-Body Dynamics, Spatial Vector Algebra
@@ -91,7 +89,20 @@ nav_order: 2
      </div>
 </div>
 
- [Paper](/assets/pdf/rbdso_wbmpc_benchmark.pdf) , [Code](https://github.com/shubhamsingh91/pinocchio)
+Measured, analytical vs CasADi (B2+Z1, n<sub>v</sub>=25), same quantity:
+
+| quantity | CasADi | analytical |
+|:--|:--:|:--:|
+| 2nd-order derivative, per call | 150 µs | **129 µs** |
+| 1st-order derivative, per call | 49 µs | **26 µs** |
+| offline build, 2nd-order | 8.83 MB C, 1.4 GB RAM | **0** |
+
+<div style="display:flex; align-items:center; gap:14px; margin-top:6px;">
+  <a href="/assets/pdf/rbdso_wbmpc_benchmark.pdf"><img src="/assets/img/rbdso_paper.png" style="height:6.5cm; border:1px solid #ccc;"></a>
+  <figcaption> 2-page technical note (PDF): the full methodology, the measurement traps avoided, results, and references. </figcaption>
+</div>
+
+ [Technical note (PDF)](/assets/pdf/rbdso_wbmpc_benchmark.pdf) , [Method paper](https://arxiv.org/abs/2307.12606) , [Code](https://github.com/shubhamsingh91/pinocchio)
 
 <br>
 <br>
