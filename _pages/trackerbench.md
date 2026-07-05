@@ -10,8 +10,8 @@ nav_order: 6
 > **Exploratory research, in progress (July 2026).** This page is a live research log. Everything
 > below comes from a **pre-registered probe**: kill criteria and thresholds were frozen *before*
 > any data was collected, and instrument amendments were logged before the affected data existed.
-> Simulation-only (MuJoCo sim2sim), two policy families so far — read as an existence proof, not a
-> benchmark release.
+> Simulation-only (MuJoCo sim2sim), four policy families attempted / three swept so far — read as
+> an existence proof, not a benchmark release.
 
 <p style="margin-top:-4px;"><a href="/assets/pdf/trackerbench_findings.pdf"><b>📄 Findings report (PDF)</b></a> — <i>TrackerBench: Stress-Testing Released Humanoid Motion-Tracking Policies — probe findings, 2026-07-05.</i></p>
 
@@ -75,8 +75,27 @@ and degradation is measured against each policy's own nominal run. Pre-registere
 two ways this could lie: *no reordering anywhere* (benchmark adds nothing) and *protocol artifact*
 (the "signal" is the harness, not the policies). Both kill gates failed to fire.
 
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/trackerbench/fig4_fingerprints.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    </div>
+</div>
+<div class="caption">
+Three policy families, three failure geometries: GMT (precise; payload/noise-fragile), TWIST
+(less precise; broadly robust), PBHC specialist (2.3 cm on extreme kung-fu; collapses at 100 N
+pushes — evaluated on its own clips). No single scalar captures this.
+</div>
+
 ## Research log
 
+- **2026-07-05 (later) — families 3 & 4, two new findings.** **PBHC/KungfuBot** (per-motion
+  specialist): third distinct fingerprint — push cliff at 50→100 N (survival 1.00→0.23, an order of
+  magnitude below the generalists), noise-fragile at 8×, yet payload-clean through 8 kg.
+  **OpenTrack** (LAFAN1 generalist): re-hosted with bit-identical fidelity, tracks its own clips at
+  11–16 mm — but falls *nominally* on 5/8 motions from a different retargeting pipeline → excluded
+  by the pre-registered sanity gate. The exclusion is itself the finding: **"generalist" scope is
+  bounded by the retargeting pipeline**, invisible to nominal-only, own-clips evaluations. A
+  neutral multi-pipeline clip set is now a mandatory v2 requirement.
 - **2026-07-05 — probe verdict: SURVIVE.** GMT + TWIST, 8 shared clips, 1,120 paired cells.
   33 rank-crossover cells stable under both failure rules; fingerprints axis-specific; instrument
   gates (re-host fidelity d=0.000, axis dynamic range 4/4, seed stability 0.86) all passed.
