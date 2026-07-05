@@ -3,7 +3,8 @@ layout: page
 title: TrackerBench
 permalink: /trackerbench/
 description: A stress-degradation benchmark for released humanoid motion-tracking policies — paired perturbations, two failure rules, and vulnerability fingerprints that nominal metrics cannot see.
-nav: true
+published: false   # PRIVATE — unpublished pending review before release (2026-07-05)
+nav: false
 nav_order: 6
 ---
 
