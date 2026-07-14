@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://shubhamsingh91.github.io/sitemap.xml
